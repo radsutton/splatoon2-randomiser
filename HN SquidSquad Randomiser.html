@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="" style="font-family:Arial; font-size:large">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script
   src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
   integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
@@ -28,9 +29,16 @@
       <label class="form-check-label player-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
         <input class="player-template-input" style="display: none" type="checkbox" onclick="choosePlayer(this)" name="players" value="PlayerTemplate">PlayerTemplate
       </label>
+      <i class="fa fa-close btn btn-danger player-template-delete" onclick="deletePlayer(this.previousSibling.value)"></i>
     </div>
   </form>
-  <script>
+    <div class="input-group">
+      <input type="text" class="form-control" id="add-player">
+      <span class="input-group-btn">
+        <button class="btn btn-light" onclick="savePlayer(document.getElementById('add-player').value)" type="button">Add Player!</button>
+      </span>
+    </div>
+      <script>
     function makeNintendoStyle(element) {
       element.style.backgroundColor = "#e81c27";
       element.style.borderStyle = "solid";
@@ -77,48 +85,69 @@
         styleButtonOff(element.parentElement);
       }
     }
-    let playerNames = ["&ahalf","Aloha","Blümchen","Butter","Cogigo","Deradi","McJonni","Redwood","Reh","Smith"];
-    let guestNames = ["Guest 1","Guest 2","Guest 3"];
-    let playerTemplate = document.getElementsByClassName("player-template")[0];
+    function addPlayer(playerName) {
+      if (playerName !== "" && playerName !== undefined) {
+        let playerTemplate = document.getElementsByClassName("player-template")[0];
+        let playerLabelTemplate = document.getElementsByClassName("player-template-label")[0];
+        let playerInputTemplate = document.getElementsByClassName("player-template-input")[0];
+        let playerDeleteTemplate = document.getElementsByClassName("player-template-delete")[0];
+        let playerForm = document.getElementById("player-form");
+        let newPlayer = playerTemplate.cloneNode();
+        newPlayer.classList.replace("player-template", "player");
+        newPlayer.setAttribute("id", playerName);
+        let playerLabel = playerLabelTemplate.cloneNode();
+        playerLabel.classList.remove("player-template-label")
+        let playerInput = playerInputTemplate.cloneNode();
+        playerInput.classList.remove("player-template-input")
+        playerInput.setAttribute("value", playerName);
+        playerInput.setAttribute("checked", "true");
+        let playerDelete = playerDeleteTemplate.cloneNode();
+        newPlayer.style.display = "";
+        playerLabel.textContent = playerName;
+        styleButtonOn(playerLabel);
+        playerLabel.appendChild(playerInput);
+        playerLabel.appendChild(playerDelete);
+        newPlayer.appendChild(playerLabel);
+        playerForm.appendChild(newPlayer);
+      }
+    }
+    function removePlayer(playerName) {
+      let player = document.getElementById(playerName);
+      player.parentElement.removeChild(player);
+    }
+    function savePlayer(playerName) {
+      playerName = playerName.replace(/[\/\\#,+()$~%.'":*?<>{}]/g, '');
+      let playerNames = [];
+      try {
+        playerNames = JSON.parse(localStorage.getItem("playerNames"));
+      }
+      catch (e) {
+        playerNames = [];
+      }
+      playerNames.push(playerName);
+      localStorage.setItem("playerNames", JSON.stringify(playerNames));
+      addPlayer(playerName);
+    }
+    function deletePlayer(playerName) {
+      let playerNames = [];
+      try {
+        playerNames = JSON.parse(localStorage.getItem("playerNames"));
+      }
+      catch (e) {
+        console.error("Player names could not be parsed for deletion. Should not occur");
+      }
+      playerNames.splice(playerNames.indexOf(playerName), 1);
+      localStorage.setItem("playerNames", JSON.stringify(playerNames));
+      removePlayer(playerName);
+    }
+    //let playerNames = ["&ahalf","Aloha","Blümchen","Butter","Cogigo","Deradi","McJonni","Redwood","Reh","Smith"];
+    let playerNames = JSON.parse(localStorage.getItem("playerNames"));
+      let playerTemplate = document.getElementsByClassName("player-template")[0];
     let playerLabelTemplate = document.getElementsByClassName("player-template-label")[0];
     let playerInputTemplate = document.getElementsByClassName("player-template-input")[0];
     let playerForm = document.getElementById("player-form");
     for (let i = 0; i < playerNames.length; i++) {
-      let newPlayer = playerTemplate.cloneNode();
-      newPlayer.classList.replace("player-template", "player");
-      let playerLabel = playerLabelTemplate.cloneNode();
-      playerLabel.classList.remove("player-template-label")
-      let playerInput = playerInputTemplate.cloneNode();
-      playerInput.classList.remove("player-template-input")
-      newPlayer.setAttribute("id", playerNames[i]);
-      playerInput.setAttribute("value", playerNames[i]);
-      playerInput.setAttribute("checked", "true");
-      newPlayer.style.display = "";
-      playerLabel.textContent = playerNames[i];
-      styleButtonOn(playerLabel);
-      playerLabel.appendChild(playerInput)
-      newPlayer.appendChild(playerLabel);
-      playerForm.appendChild(newPlayer);
-    }/*
-    let hr = document.createElement("hr");
-    hr.style.margin = "0.2rem";
-    hr.style.backgroundColor = "#e81c27";
-    playerForm.appendChild(hr);*/
-    for (let i = 0; i < guestNames.length; i++) {
-      let newPlayer = playerTemplate.cloneNode();
-      newPlayer.classList.replace("player-template", "player");
-      let playerLabel = playerLabelTemplate.cloneNode();
-      playerLabel.classList.remove("player-template-label")
-      let playerInput = playerInputTemplate.cloneNode();
-      playerInput.classList.remove("player-template-input")
-      newPlayer.setAttribute("id", guestNames[i]);
-      playerInput.setAttribute("value", guestNames[i]);
-      newPlayer.style.display = "";
-      playerLabel.textContent = guestNames[i];
-      styleButtonOff(playerLabel);
-      playerLabel.appendChild(playerInput)
-      newPlayer.appendChild(playerLabel);
-      playerForm.appendChild(newPlayer);
+      addPlayer(playerNames[i])
     }
   </script>
   </div>
