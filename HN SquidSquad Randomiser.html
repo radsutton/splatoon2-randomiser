@@ -2,681 +2,756 @@
 <html class="no-js" lang="" style="font-family:serif; font-size:large">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Bootstrap v4 -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
 
 <head>
-  <meta charset="utf-8">
-  <title>HN SquidSquad Randomiser</title>
-  <meta name="description" content="A one page app for choosing teams randomly">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Richard Sutton">
+    <meta charset="utf-8">
+    <title>HN SquidSquad Randomiser</title>
+    <meta name="description" content="A one page app for choosing teams randomly">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Richard Sutton">
 </head>
 
 <body class="container" style="background-color:#1c1d23;color: white">
 <div style="text-align: center;font-weight: bold;" class="row mx-auto d-block">
-  <img src="https://i.imgur.com/yEyhDYR.png" title="HN" alt="HN" style="max-width: 5rem"/>
-  <h1 class="d-block" style="font-weight: bolder;">SquidSquad Randomiser!</h1>
+    <img src="https://i.imgur.com/yEyhDYR.png" title="HN" alt="HN" style="max-width: 5rem"/>
+    <h1 class="d-block" style="font-weight: bolder;">SquidSquad Randomiser!</h1>
 </div>
 <div class="dropdown">
-  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-    Language
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item language-template" language-code="" style="display: none" onclick="changeLanguage(this.getAttribute('language-code'))" href="#"></a>
-  </div>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        Language
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item language-template" language-code="" style="display: none"
+           onclick="changeLanguage(this.getAttribute('language-code'))" href="#"></a>
+    </div>
 </div>
 <div>
-  <div style="padding: 0 0.5rem 0.5rem" class="nintendo-style">
-  <h3>Choose your players:</h3>
-  <form id="player-form">
-    <div class="form-check-inline player-template" style="display: none">
-      <label class="form-check-label player-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
-        <input class="player-template-input" style="display: none" type="checkbox" onclick="choosePlayer(this)" name="players" value="PlayerTemplate">PlayerTemplate
-      </label>
-      <i class="fa fa-close btn btn-sm btn-danger player-template-delete" onclick="deletePlayer(this.previousSibling.value)"></i>
-    </div>
-  </form>
-    <div class="input-group">
-      <input type="text" class="form-control" id="add-player">
-      <span class="input-group-btn">
+    <div style="padding: 0 0.5rem 0.5rem" class="nintendo-style">
+        <h3>Choose your players:</h3>
+        <form id="player-form">
+            <div class="form-check-inline player-template" style="display: none">
+                <label class="form-check-label player-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
+                    <input class="player-template-input" style="display: none" type="checkbox"
+                           onclick="chooseItem(this)" name="players" value="PlayerTemplate">PlayerTemplate
+                </label>
+                <i class="fa fa-close btn btn-sm btn-danger player-template-delete"
+                   onclick="deletePlayer(this.previousSibling.value)"></i>
+            </div>
+        </form>
+        <div class="input-group">
+            <input type="text" class="form-control" id="add-player">
+            <span class="input-group-btn">
         <button class="btn btn-light" onclick="savePlayer(document.getElementById('add-player').value)" type="button">Add Player!</button>
       </span>
-    </div>
-      <script>
-        const SUPPORTED_LANGUAGES = ["en","de"];
-        const TRANSLATE_LANGUAGE_CODES = {
-          en: ["English", "German"],
-          de: ["Englisch", "Deutsch"]
-        }
-        const MODES = {
-          en: ["Splat Zones","Tower Control","Rainmaker","Clam Blitz","Turf War","Splatfest"],
-          de: ["Herrschaft","Turmkommando","Operation Goldfisch","Muschelchaos","Revierkampf","Splatfest"]
-        };
-        const MAPS = {
-          en: ["Humpback Pump Track","Inkblot Art Academy","Moray Towers","Musselforge Fitness","Port Mackerel","Starfish Mainstage","Sturgeon Shipyard","The Reef","Manta Maria","Kelp Dome","Snapper Canal","Blackbelly Skatepark","MakoMart","Walleye Warehouse","Shellendorf Institute","Arowana Mall","Goby Arena","Piranha Pit","Camp Triggerfish","Wahoo World","New Albacore Hotel","Ancho-V Games","Skipper Pavilion"],
-          de: ["Buckelwal-Piste","Nacre Academy","Muränentürme","Molluskelbude","Heilbutt-Hafen","Seeigel-Rockbühne","Störwerft","Korallenviertel","Manta Maria","Tümmlerkuppel","Grätenkanal","Punkasius-Skatepark","Cetacea Market","Kofferfisch-Lager","Abyssal-Museum","Arowana Center","Backfisch-Stadion","Steinköhler-Grube","Camp Schützenfisch","Flunder-Funpark","Hotel Neothun","Anchobit Games HQ","Grundel-Pavillon"]
-        };
-        const WEAPONS = {
-          en: [".52 Gal",
-          ".52 Gal Deco",
-          ".96 Gal",
-          ".96 Gal Deco",
-          "Aerospray MG",
-          "Aerospray PG",
-          "Aerospray RG",
-          "Ballpoint Splatling",
-          "Ballpoint Splatling Nouveau",
-          "Bamboozler 14 Mk I",
-          "Bamboozler 14 Mk II",
-          "Bamboozler 14 Mk III",
-          "Blaster",
-          "Bloblobber",
-          "Bloblobber Deco",
-          "Carbon Roller",
-          "Carbon Roller Deco",
-          "Cherry H-3 Nozzlenose",
-          "Clash Blaster",
-          "Clash Blaster Neo",
-          "Classic Squiffer",
-          "Clear Dapple Dualies",
-          "Custom Blaster",
-          "Custom Dualie Squelchers",
-          "Custom E-liter 4K",
-          "Custom E-liter 4K Scope",
-          "Custom Explosher",
-          "Custom Goo Tuber",
-          "Custom Hydra Splatling",
-          "Custom Jet Squelcher",
-          "Custom Range Blaster",
-          "Custom Splattershot Jr.",
-          "Dapple Dualies",
-          "Dapple Dualies Nouveau",
-          "Dark Tetra Dualies",
-          "Dualie Squelchers",
-          "Dynamo Roller",
-          "E-liter 4K",
-          "E-liter 4K Scope",
-          "Enperry Splat Dualies",
-          "Explosher",
-          "Firefin Splat Charger",
-          "Firefin Splatterscope",
-          "Flingza Roller",
-          "Foil Flingza Roller",
-          "Foil Squeezer",
-          "Forge Splattershot Pro",
-          "Fresh Squiffer",
-          "Glooga Dualies",
-          "Glooga Dualies Deco",
-          "Gold Dynamo Roller",
-          "Goo Tuber",
-          "Grim Range Blaster",
-          "H-3 Nozzlenose",
-          "H-3 Nozzlenose D",
-          "Heavy Splatling",
-          "Heavy Splatling Deco",
-          "Heavy Splatling Remix",
-          "Hero Blaster Replica",
-          "Hero Brella Replica",
-          "Hero Charger Replica",
-          "Hero Dualie Replicas",
-          "Hero Roller Replica",
-          "Hero Shot Replica",
-          "Hero Slosher Replica",
-          "Hero Splatling Replica",
-          "Herobrush Replica",
-          "Hydra Splatling",
-          "Inkbrush",
-          "Inkbrush Nouveau",
-          "Jet Squelcher",
-          "Kensa .52 Gal",
-          "Kensa Charger",
-          "Kensa Dynamo Roller",
-          "Kensa Glooga Dualies",
-          "Kensa L-3 Nozzlenose",
-          "Kensa Luna Blaster",
-          "Kensa Mini Splatling",
-          "Kensa Octobrush",
-          "Kensa Rapid Blaster",
-          "Kensa Sloshing Machine",
-          "Kensa Splat Dualies",
-          "Kensa Splat Roller",
-          "Kensa Splatterscope",
-          "Kensa Splattershot",
-          "Kensa Splattershot Jr.",
-          "Kensa Splattershot Pro",
-          "Kensa Undercover Brella",
-          "Krak-On Splat Roller",
-          "L-3 Nozzlenose",
-          "L-3 Nozzlenose D",
-          "Light Tetra Dualies",
-          "Luna Blaster",
-          "Luna Blaster Neo",
-          "Mini Splatling",
-          "N-ZAP '83",
-          "N-ZAP '85",
-          "N-ZAP '89",
-          "Nautilus 47",
-          "Nautilus 79",
-          "Neo Splash-o-matic",
-          "Neo Sploosh-o-matic",
-          "New Squiffer",
-          "Octobrush",
-          "Octobrush Nouveau",
-          "Octo Shot Replica",
-          "Permanent Inkbrush",
-          "Range Blaster",
-          "Rapid Blaster",
-          "Rapid Blaster Deco",
-          "Rapid Blaster Pro",
-          "Rapid Blaster Pro Deco",
-          "Slosher",
-          "Slosher Deco",
-          "Sloshing Machine",
-          "Sloshing Machine Neo",
-          "Soda Slosher",
-          "Sorella Brella",
-          "Splash-o-matic",
-          "Splat Brella",
-          "Splat Charger",
-          "Splat Dualies",
-          "Splat Roller",
-          "Splatterscope",
-          "Splattershot",
-          "Splattershot Jr.",
-          "Splattershot Pro",
-          "Sploosh-o-matic",
-          "Sploosh-o-matic 7",
-          "Squeezer",
-          "Tenta Brella",
-          "Tenta Camo Brella",
-          "Tenta Sorella Brella",
-          "Tentatek Splattershot",
-          "Tri-Slosher",
-          "Tri-Slosher Nouveau",
-          "Undercover Brella",
-          "Undercover Sorella Brella",
-          "Zink Mini Splatling"],
-          de:[".52 Gal", //TODO: Translate
-            ".52 Gal Deco",
-            ".96 Gal",
-            ".96 Gal Deco",
-            "Aerospray MG",
-            "Aerospray PG",
-            "Aerospray RG",
-            "Ballpoint Splatling",
-            "Ballpoint Splatling Nouveau",
-            "Bamboozler 14 Mk I",
-            "Bamboozler 14 Mk II",
-            "Bamboozler 14 Mk III",
-            "Blaster",
-            "Bloblobber",
-            "Bloblobber Deco",
-            "Carbon Roller",
-            "Carbon Roller Deco",
-            "Cherry H-3 Nozzlenose",
-            "Clash Blaster",
-            "Clash Blaster Neo",
-            "Classic Squiffer",
-            "Clear Dapple Dualies",
-            "Custom Blaster",
-            "Custom Dualie Squelchers",
-            "Custom E-liter 4K",
-            "Custom E-liter 4K Scope",
-            "Custom Explosher",
-            "Custom Goo Tuber",
-            "Custom Hydra Splatling",
-            "Custom Jet Squelcher",
-            "Custom Range Blaster",
-            "Custom Splattershot Jr.",
-            "Dapple Dualies",
-            "Dapple Dualies Nouveau",
-            "Dark Tetra Dualies",
-            "Dualie Squelchers",
-            "Dynamo Roller",
-            "E-liter 4K",
-            "E-liter 4K Scope",
-            "Enperry Splat Dualies",
-            "Explosher",
-            "Firefin Splat Charger",
-            "Firefin Splatterscope",
-            "Flingza Roller",
-            "Foil Flingza Roller",
-            "Foil Squeezer",
-            "Forge Splattershot Pro",
-            "Fresh Squiffer",
-            "Glooga Dualies",
-            "Glooga Dualies Deco",
-            "Gold Dynamo Roller",
-            "Goo Tuber",
-            "Grim Range Blaster",
-            "H-3 Nozzlenose",
-            "H-3 Nozzlenose D",
-            "Heavy Splatling",
-            "Heavy Splatling Deco",
-            "Heavy Splatling Remix",
-            "Hero Blaster Replica",
-            "Hero Brella Replica",
-            "Hero Charger Replica",
-            "Hero Dualie Replicas",
-            "Hero Roller Replica",
-            "Hero Shot Replica",
-            "Hero Slosher Replica",
-            "Hero Splatling Replica",
-            "Herobrush Replica",
-            "Hydra Splatling",
-            "Inkbrush",
-            "Inkbrush Nouveau",
-            "Jet Squelcher",
-            "Kensa .52 Gal",
-            "Kensa Charger",
-            "Kensa Dynamo Roller",
-            "Kensa Glooga Dualies",
-            "Kensa L-3 Nozzlenose",
-            "Kensa Luna Blaster",
-            "Kensa Mini Splatling",
-            "Kensa Octobrush",
-            "Kensa Rapid Blaster",
-            "Kensa Sloshing Machine",
-            "Kensa Splat Dualies",
-            "Kensa Splat Roller",
-            "Kensa Splatterscope",
-            "Kensa Splattershot",
-            "Kensa Splattershot Jr.",
-            "Kensa Splattershot Pro",
-            "Kensa Undercover Brella",
-            "Krak-On Splat Roller",
-            "L-3 Nozzlenose",
-            "L-3 Nozzlenose D",
-            "Light Tetra Dualies",
-            "Luna Blaster",
-            "Luna Blaster Neo",
-            "Mini Splatling",
-            "N-ZAP '83",
-            "N-ZAP '85",
-            "N-ZAP '89",
-            "Nautilus 47",
-            "Nautilus 79",
-            "Neo Splash-o-matic",
-            "Neo Sploosh-o-matic",
-            "New Squiffer",
-            "Octobrush",
-            "Octobrush Nouveau",
-            "Octo Shot Replica",
-            "Permanent Inkbrush",
-            "Range Blaster",
-            "Rapid Blaster",
-            "Rapid Blaster Deco",
-            "Rapid Blaster Pro",
-            "Rapid Blaster Pro Deco",
-            "Slosher",
-            "Slosher Deco",
-            "Sloshing Machine",
-            "Sloshing Machine Neo",
-            "Soda Slosher",
-            "Sorella Brella",
-            "Splash-o-matic",
-            "Splat Brella",
-            "Splat Charger",
-            "Splat Dualies",
-            "Splat Roller",
-            "Splatterscope",
-            "Splattershot",
-            "Splattershot Jr.",
-            "Splattershot Pro",
-            "Sploosh-o-matic",
-            "Sploosh-o-matic 7",
-            "Squeezer",
-            "Tenta Brella",
-            "Tenta Camo Brella",
-            "Tenta Sorella Brella",
-            "Tentatek Splattershot",
-            "Tri-Slosher",
-            "Tri-Slosher Nouveau",
-            "Undercover Brella",
-            "Undercover Sorella Brella",
-            "Zink Mini Splatling"]
-        };
-
-        let CURRENT_LANGUAGE;
-        if (localStorage.getItem("savedLanguage") !== null) {
-          CURRENT_LANGUAGE = localStorage.getItem("savedLanguage");
-        }
-        else {
-          CURRENT_LANGUAGE = navigator.language;
-          if (!SUPPORTED_LANGUAGES.includes(CURRENT_LANGUAGE) ) {
-            let found = false;
-            //Check substring
-            let index, value;
-            for (index = 0; index < SUPPORTED_LANGUAGES.length; ++index) {
-              value = SUPPORTED_LANGUAGES[index];
-              if (CURRENT_LANGUAGE.substring(0, value.length) === value) {
-                CURRENT_LANGUAGE = value;
-                found = true;
-                break;
-              }
+        </div>
+        <script>
+            const SUPPORTED_LANGUAGES = ["en", "de"];
+            const TRANSLATE_LANGUAGE_CODES = {
+                en: ["English", "German"],
+                de: ["Englisch", "Deutsch"]
             }
-            if (!found) {
-              //No language found, use default English
-              CURRENT_LANGUAGE = SUPPORTED_LANGUAGES[0];
+            const MODES = {
+                en: ["Splat Zones", "Tower Control", "Rainmaker", "Clam Blitz", "Turf War", "Splatfest"],
+                de: ["Herrschaft", "Turmkommando", "Operation Goldfisch", "Muschelchaos", "Revierkampf", "Splatfest"]
+            };
+            const MAPS = {
+                en: ["Humpback Pump Track", "Inkblot Art Academy", "Moray Towers", "Musselforge Fitness", "Port Mackerel", "Starfish Mainstage", "Sturgeon Shipyard", "The Reef", "Manta Maria", "Kelp Dome", "Snapper Canal", "Blackbelly Skatepark", "MakoMart", "Walleye Warehouse", "Shellendorf Institute", "Arowana Mall", "Goby Arena", "Piranha Pit", "Camp Triggerfish", "Wahoo World", "New Albacore Hotel", "Ancho-V Games", "Skipper Pavilion"],
+                de: ["Buckelwal-Piste", "Nacre Academy", "Muränentürme", "Molluskelbude", "Heilbutt-Hafen", "Seeigel-Rockbühne", "Störwerft", "Korallenviertel", "Manta Maria", "Tümmlerkuppel", "Grätenkanal", "Punkasius-Skatepark", "Cetacea Market", "Kofferfisch-Lager", "Abyssal-Museum", "Arowana Center", "Backfisch-Stadion", "Steinköhler-Grube", "Camp Schützenfisch", "Flunder-Funpark", "Hotel Neothun", "Anchobit Games HQ", "Grundel-Pavillon"]
+            };
+            const WEAPONS = {
+                en: [".52 Gal",
+                    ".52 Gal Deco",
+                    ".96 Gal",
+                    ".96 Gal Deco",
+                    "Aerospray MG",
+                    "Aerospray PG",
+                    "Aerospray RG",
+                    "Ballpoint Splatling",
+                    "Ballpoint Splatling Nouveau",
+                    "Bamboozler 14 Mk I",
+                    "Bamboozler 14 Mk II",
+                    "Bamboozler 14 Mk III",
+                    "Blaster",
+                    "Bloblobber",
+                    "Bloblobber Deco",
+                    "Carbon Roller",
+                    "Carbon Roller Deco",
+                    "Cherry H-3 Nozzlenose",
+                    "Clash Blaster",
+                    "Clash Blaster Neo",
+                    "Classic Squiffer",
+                    "Clear Dapple Dualies",
+                    "Custom Blaster",
+                    "Custom Dualie Squelchers",
+                    "Custom E-liter 4K",
+                    "Custom E-liter 4K Scope",
+                    "Custom Explosher",
+                    "Custom Goo Tuber",
+                    "Custom Hydra Splatling",
+                    "Custom Jet Squelcher",
+                    "Custom Range Blaster",
+                    "Custom Splattershot Jr.",
+                    "Dapple Dualies",
+                    "Dapple Dualies Nouveau",
+                    "Dark Tetra Dualies",
+                    "Dualie Squelchers",
+                    "Dynamo Roller",
+                    "E-liter 4K",
+                    "E-liter 4K Scope",
+                    "Enperry Splat Dualies",
+                    "Explosher",
+                    "Firefin Splat Charger",
+                    "Firefin Splatterscope",
+                    "Flingza Roller",
+                    "Foil Flingza Roller",
+                    "Foil Squeezer",
+                    "Forge Splattershot Pro",
+                    "Fresh Squiffer",
+                    "Glooga Dualies",
+                    "Glooga Dualies Deco",
+                    "Gold Dynamo Roller",
+                    "Goo Tuber",
+                    "Grim Range Blaster",
+                    "H-3 Nozzlenose",
+                    "H-3 Nozzlenose D",
+                    "Heavy Splatling",
+                    "Heavy Splatling Deco",
+                    "Heavy Splatling Remix",
+                    "Hero Blaster Replica",
+                    "Hero Brella Replica",
+                    "Hero Charger Replica",
+                    "Hero Dualie Replicas",
+                    "Hero Roller Replica",
+                    "Hero Shot Replica",
+                    "Hero Slosher Replica",
+                    "Hero Splatling Replica",
+                    "Herobrush Replica",
+                    "Hydra Splatling",
+                    "Inkbrush",
+                    "Inkbrush Nouveau",
+                    "Jet Squelcher",
+                    "Kensa .52 Gal",
+                    "Kensa Charger",
+                    "Kensa Dynamo Roller",
+                    "Kensa Glooga Dualies",
+                    "Kensa L-3 Nozzlenose",
+                    "Kensa Luna Blaster",
+                    "Kensa Mini Splatling",
+                    "Kensa Octobrush",
+                    "Kensa Rapid Blaster",
+                    "Kensa Sloshing Machine",
+                    "Kensa Splat Dualies",
+                    "Kensa Splat Roller",
+                    "Kensa Splatterscope",
+                    "Kensa Splattershot",
+                    "Kensa Splattershot Jr.",
+                    "Kensa Splattershot Pro",
+                    "Kensa Undercover Brella",
+                    "Krak-On Splat Roller",
+                    "L-3 Nozzlenose",
+                    "L-3 Nozzlenose D",
+                    "Light Tetra Dualies",
+                    "Luna Blaster",
+                    "Luna Blaster Neo",
+                    "Mini Splatling",
+                    "N-ZAP '83",
+                    "N-ZAP '85",
+                    "N-ZAP '89",
+                    "Nautilus 47",
+                    "Nautilus 79",
+                    "Neo Splash-o-matic",
+                    "Neo Sploosh-o-matic",
+                    "New Squiffer",
+                    "Octobrush",
+                    "Octobrush Nouveau",
+                    "Octo Shot Replica",
+                    "Permanent Inkbrush",
+                    "Range Blaster",
+                    "Rapid Blaster",
+                    "Rapid Blaster Deco",
+                    "Rapid Blaster Pro",
+                    "Rapid Blaster Pro Deco",
+                    "Slosher",
+                    "Slosher Deco",
+                    "Sloshing Machine",
+                    "Sloshing Machine Neo",
+                    "Soda Slosher",
+                    "Sorella Brella",
+                    "Splash-o-matic",
+                    "Splat Brella",
+                    "Splat Charger",
+                    "Splat Dualies",
+                    "Splat Roller",
+                    "Splatterscope",
+                    "Splattershot",
+                    "Splattershot Jr.",
+                    "Splattershot Pro",
+                    "Sploosh-o-matic",
+                    "Sploosh-o-matic 7",
+                    "Squeezer",
+                    "Tenta Brella",
+                    "Tenta Camo Brella",
+                    "Tenta Sorella Brella",
+                    "Tentatek Splattershot",
+                    "Tri-Slosher",
+                    "Tri-Slosher Nouveau",
+                    "Undercover Brella",
+                    "Undercover Sorella Brella",
+                    "Zink Mini Splatling"],
+                de: [".52 Gal", //TODO: Translate
+                    ".52 Gal Deco",
+                    ".96 Gal",
+                    ".96 Gal Deco",
+                    "Aerospray MG",
+                    "Aerospray PG",
+                    "Aerospray RG",
+                    "Ballpoint Splatling",
+                    "Ballpoint Splatling Nouveau",
+                    "Bamboozler 14 Mk I",
+                    "Bamboozler 14 Mk II",
+                    "Bamboozler 14 Mk III",
+                    "Blaster",
+                    "Bloblobber",
+                    "Bloblobber Deco",
+                    "Carbon Roller",
+                    "Carbon Roller Deco",
+                    "Cherry H-3 Nozzlenose",
+                    "Clash Blaster",
+                    "Clash Blaster Neo",
+                    "Classic Squiffer",
+                    "Clear Dapple Dualies",
+                    "Custom Blaster",
+                    "Custom Dualie Squelchers",
+                    "Custom E-liter 4K",
+                    "Custom E-liter 4K Scope",
+                    "Custom Explosher",
+                    "Custom Goo Tuber",
+                    "Custom Hydra Splatling",
+                    "Custom Jet Squelcher",
+                    "Custom Range Blaster",
+                    "Custom Splattershot Jr.",
+                    "Dapple Dualies",
+                    "Dapple Dualies Nouveau",
+                    "Dark Tetra Dualies",
+                    "Dualie Squelchers",
+                    "Dynamo Roller",
+                    "E-liter 4K",
+                    "E-liter 4K Scope",
+                    "Enperry Splat Dualies",
+                    "Explosher",
+                    "Firefin Splat Charger",
+                    "Firefin Splatterscope",
+                    "Flingza Roller",
+                    "Foil Flingza Roller",
+                    "Foil Squeezer",
+                    "Forge Splattershot Pro",
+                    "Fresh Squiffer",
+                    "Glooga Dualies",
+                    "Glooga Dualies Deco",
+                    "Gold Dynamo Roller",
+                    "Goo Tuber",
+                    "Grim Range Blaster",
+                    "H-3 Nozzlenose",
+                    "H-3 Nozzlenose D",
+                    "Heavy Splatling",
+                    "Heavy Splatling Deco",
+                    "Heavy Splatling Remix",
+                    "Hero Blaster Replica",
+                    "Hero Brella Replica",
+                    "Hero Charger Replica",
+                    "Hero Dualie Replicas",
+                    "Hero Roller Replica",
+                    "Hero Shot Replica",
+                    "Hero Slosher Replica",
+                    "Hero Splatling Replica",
+                    "Herobrush Replica",
+                    "Hydra Splatling",
+                    "Inkbrush",
+                    "Inkbrush Nouveau",
+                    "Jet Squelcher",
+                    "Kensa .52 Gal",
+                    "Kensa Charger",
+                    "Kensa Dynamo Roller",
+                    "Kensa Glooga Dualies",
+                    "Kensa L-3 Nozzlenose",
+                    "Kensa Luna Blaster",
+                    "Kensa Mini Splatling",
+                    "Kensa Octobrush",
+                    "Kensa Rapid Blaster",
+                    "Kensa Sloshing Machine",
+                    "Kensa Splat Dualies",
+                    "Kensa Splat Roller",
+                    "Kensa Splatterscope",
+                    "Kensa Splattershot",
+                    "Kensa Splattershot Jr.",
+                    "Kensa Splattershot Pro",
+                    "Kensa Undercover Brella",
+                    "Krak-On Splat Roller",
+                    "L-3 Nozzlenose",
+                    "L-3 Nozzlenose D",
+                    "Light Tetra Dualies",
+                    "Luna Blaster",
+                    "Luna Blaster Neo",
+                    "Mini Splatling",
+                    "N-ZAP '83",
+                    "N-ZAP '85",
+                    "N-ZAP '89",
+                    "Nautilus 47",
+                    "Nautilus 79",
+                    "Neo Splash-o-matic",
+                    "Neo Sploosh-o-matic",
+                    "New Squiffer",
+                    "Octobrush",
+                    "Octobrush Nouveau",
+                    "Octo Shot Replica",
+                    "Permanent Inkbrush",
+                    "Range Blaster",
+                    "Rapid Blaster",
+                    "Rapid Blaster Deco",
+                    "Rapid Blaster Pro",
+                    "Rapid Blaster Pro Deco",
+                    "Slosher",
+                    "Slosher Deco",
+                    "Sloshing Machine",
+                    "Sloshing Machine Neo",
+                    "Soda Slosher",
+                    "Sorella Brella",
+                    "Splash-o-matic",
+                    "Splat Brella",
+                    "Splat Charger",
+                    "Splat Dualies",
+                    "Splat Roller",
+                    "Splatterscope",
+                    "Splattershot",
+                    "Splattershot Jr.",
+                    "Splattershot Pro",
+                    "Sploosh-o-matic",
+                    "Sploosh-o-matic 7",
+                    "Squeezer",
+                    "Tenta Brella",
+                    "Tenta Camo Brella",
+                    "Tenta Sorella Brella",
+                    "Tentatek Splattershot",
+                    "Tri-Slosher",
+                    "Tri-Slosher Nouveau",
+                    "Undercover Brella",
+                    "Undercover Sorella Brella",
+                    "Zink Mini Splatling"]
+            };
+
+            let CURRENT_LANGUAGE;
+            if (localStorage.getItem("savedLanguage") !== null) {
+                CURRENT_LANGUAGE = localStorage.getItem("savedLanguage");
+            } else {
+                CURRENT_LANGUAGE = navigator.language;
+                if (!SUPPORTED_LANGUAGES.includes(CURRENT_LANGUAGE)) {
+                    let found = false;
+                    //Check substring
+                    let index, value;
+                    for (index = 0; index < SUPPORTED_LANGUAGES.length; ++index) {
+                        value = SUPPORTED_LANGUAGES[index];
+                        if (CURRENT_LANGUAGE.substring(0, value.length) === value) {
+                            CURRENT_LANGUAGE = value;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        //No language found, use default English
+                        CURRENT_LANGUAGE = SUPPORTED_LANGUAGES[0];
+                    }
+                }
             }
-          }
-        }
-        let languageTemplate = document.getElementsByClassName("language-template")[0];
-        for (let i = 0; i < SUPPORTED_LANGUAGES.length; i++) {
-          addLanguageToPage(languageTemplate, SUPPORTED_LANGUAGES[i]);
-        }
-
-        function addLanguageToPage(template, languageName) {
-          let language = template.cloneNode();
-          language.classList.replace("language-template", "language");
-          language.setAttribute("language-code", languageName);
-          language.innerText = TRANSLATE_LANGUAGE_CODES[CURRENT_LANGUAGE][SUPPORTED_LANGUAGES.indexOf(languageName)];
-          language.style.display = "";
-          if (CURRENT_LANGUAGE === languageName) {
-            language.classList.add("disabled")
-          }
-          template.parentElement.appendChild(language);
-        }
-
-        function changeLanguage(language) {
-          if (!SUPPORTED_LANGUAGES.includes(language)) {
-            console.error("Language not supported");
-          }
-          else {
-            localStorage.setItem("savedLanguage", language);
-            location.reload();
-          }
-        }
-
-    function makeNintendoStyle(element) {
-      element.style.backgroundColor = "#e81c27";
-      element.style.borderStyle = "solid";
-      element.style.borderRadius = "15px";
-      element.style.borderColor = "white";
-      element.style.borderWidth = "0.1rem";
-      element.style.color = "white";
-      element.style.marginBottom = "1%";
-      element.style.marginLeft = "-15px";
-      element.style.marginRight = "-15px";
-      element.style.textAlign = "center";
-    }
-    function nintendise() {
-      let nintyElements = document.getElementsByClassName("nintendo-style");
-      for (let i = 0; i < nintyElements.length; i++) {
-        makeNintendoStyle(nintyElements[i]);
-      }
-    }
-    function nintyReload(element) {
-      element.style.backgroundColor = "black";
-      element.style.color = "black";
-      window.setTimeout(function () {
-        nintendise();
-      }, 30);
-    }
-    function styleButton(element) {
-      element.style.color = "black";
-      element.style.boxShadow = "2px 2px 2px grey";
-      element.style.marginBottom = "0.2rem";
-    }
-    function styleButtonOn(element) {
-      element.style.backgroundColor = "white";
-      styleButton(element);
-    }
-    function styleButtonOff(element) {
-      element.style.backgroundColor = "grey";
-      styleButton(element);
-    }
-    function choosePlayer(element) {
-      if (element.checked) {
-        styleButtonOn(element.parentElement);
-      }
-      else {
-        styleButtonOff(element.parentElement);
-      }
-    }
-    function addPlayer(playerName) {
-      if (playerName !== "" && playerName !== undefined) {
-        let playerTemplate = document.getElementsByClassName("player-template")[0];
-        let playerLabelTemplate = document.getElementsByClassName("player-template-label")[0];
-        let playerInputTemplate = document.getElementsByClassName("player-template-input")[0];
-        let playerDeleteTemplate = document.getElementsByClassName("player-template-delete")[0];
-        let playerForm = document.getElementById("player-form");
-        let newPlayer = playerTemplate.cloneNode();
-        newPlayer.classList.replace("player-template", "player");
-        newPlayer.setAttribute("id", playerName);
-        let playerLabel = playerLabelTemplate.cloneNode();
-        playerLabel.classList.remove("player-template-label")
-        let playerInput = playerInputTemplate.cloneNode();
-        playerInput.classList.remove("player-template-input")
-        playerInput.setAttribute("value", playerName);
-        playerInput.setAttribute("checked", "true");
-        let playerDelete = playerDeleteTemplate.cloneNode();
-        newPlayer.style.display = "";
-        playerLabel.textContent = playerName;
-        styleButtonOn(playerLabel);
-        playerLabel.appendChild(playerInput);
-        playerLabel.appendChild(playerDelete);
-        newPlayer.appendChild(playerLabel);
-        playerForm.appendChild(newPlayer);
-      }
-    }
-    function removePlayer(playerName) {
-      let player = document.getElementById(playerName);
-      player.parentElement.removeChild(player);
-    }
-    function savePlayer(playerName) {
-      playerName = playerName.replace(/[\/\\#,+()$~%.'":*?<>{}]/g, '');
-      let playerNames = [];
-      try {
-        playerNames = JSON.parse(localStorage.getItem("playerNames"));
-      }
-      catch (e) {
-        playerNames = [];
-      }
-      playerNames.push(playerName);
-      localStorage.setItem("playerNames", JSON.stringify(playerNames));
-      addPlayer(playerName);
-    }
-    function deletePlayer(playerName) {
-      let playerNames = [];
-      try {
-        playerNames = JSON.parse(localStorage.getItem("playerNames"));
-      }
-      catch (e) {
-        console.error("Player names could not be parsed for deletion. Should not occur");
-      }
-      playerNames.splice(playerNames.indexOf(playerName), 1);
-      localStorage.setItem("playerNames", JSON.stringify(playerNames));
-      removePlayer(playerName);
-    }
-    let playerNames = JSON.parse(localStorage.getItem("playerNames"));
-    for (let i = 0; i < playerNames.length; i++) {
-      addPlayer(playerNames[i])
-    }
-  </script>
-  </div>
-  <div style="padding: 0 0.5rem 0.5rem;" class="nintendo-style">
-  <h3>Choose your group size:</h3>
-  <form>
-    <div class="form-check-inline">
-      <label class="form-check-label btn btn-sm" style="font-weight: bold">
-        <input type="radio" class="form-check-input group-size" style="display: none" id="group-two" onclick="chooseGroupSize()" name="group-size" value="2">2
-      </label>
-    </div>
-    <div class="form-check-inline">
-      <label class="form-check-label btn btn-sm" style="font-weight: bold">
-        <input type="radio" class="form-check-input group-size" style="display: none" id="group-three" onclick="chooseGroupSize()" name="group-size" value="3">3
-      </label>
-    </div>
-    <div class="form-check-inline">
-      <label class="form-check-label btn btn-sm" style="font-weight: bold">
-        <input type="radio" class="form-check-input group-size" style="display: none;" id="group-four" onclick="chooseGroupSize()" name="group-size" value="4" checked>4
-      </label>
-    </div>
-  </form>
-  </div>
-  <script>
-    function chooseGroupSize() {
-      let groupSizes = document.getElementsByClassName("group-size");
-      for (let i = 0;i < groupSizes.length;i++) {
-        if (groupSizes[i].checked) {
-          styleButtonOn(groupSizes[i].parentElement);
-        }
-        else {
-          styleButtonOff(groupSizes[i].parentElement);
-        }
-      }
-    }
-    function randomisePlayers() {
-      //Set up random weapon generation
-      let isRandomWeapons = document.getElementsByClassName("is-random-weapons")[0].checked;
-      //Remove previous results
-      let previousGroups = document.getElementsByClassName("random-group");
-      let prevGroupLength = previousGroups.length;
-      for (let i = 0; i < prevGroupLength; i++) {
-        previousGroups[0].remove();
-      }
-      //Get all checked players
-      let playerForm = document.getElementById("player-form");
-      let playerList = [];
-      for (let i = 0; i < playerForm.children.length; i++) {
-        if (playerForm.children[i].classList.contains("player") &&
-            playerForm.children[i].children[0].children[0].checked){
-              playerList.push(playerForm.children[i].children[0].children[0].getAttribute("value"));
-        }
-      }
-      //Get group size
-      let groupSizes = document.getElementsByName('group-size');
-      let groupSize;
-      for (let i = 0, length = groupSizes.length; i < length; i++) {
-        if (groupSizes[i].checked) {
-          groupSize = groupSizes[i].value;
-          break;
-        }
-      }
-      //Assign players random numbers and organise them so
-      let orderedPlayerList = [];
-      for (let i = 0, length = playerList.length; i < length; i++) {
-        let randomNumber = Math.floor(Math.random() * 500);
-        orderedPlayerList.push([randomNumber, playerList[i]]);
-      }
-      orderedPlayerList.sort(function(a, b){return a[0]-b[0]});
-      //Add results to page
-      let groupTemplate = document.getElementsByClassName("group-template")[0];
-      while (orderedPlayerList.length > 0) {
-        let groupElement = groupTemplate.cloneNode();
-        groupElement.classList.remove("group-template");
-        groupElement.classList.add("random-group");
-        groupElement.style.display = "";
-        let li = document.createElement("ul");
-        li.style.padding = "0";
-        for (let i = 0; i < groupSize; i++) {
-          let orderedPlayer = orderedPlayerList.pop();
-          if (orderedPlayer !== undefined) {
-            let listItem = document.getElementsByClassName("group-item-template")[0].cloneNode();
-            listItem.style.display = "";
-            listItem.classList.remove("group-item-template");
-            listItem.textContent = orderedPlayer[1];
-            //Add random weapon if checked
-            if (isRandomWeapons) {
-              let weaponText = document.createElement("p");
-              weaponText.style.color = "yellow";
-              weaponText.innerText = WEAPONS[Math.floor(Math.random() * WEAPONS.length)];
-              listItem.appendChild(weaponText);
+            let languageTemplate = document.getElementsByClassName("language-template")[0];
+            for (let i = 0; i < SUPPORTED_LANGUAGES.length; i++) {
+                addLanguageToPage(languageTemplate, SUPPORTED_LANGUAGES[i]);
             }
-            li.appendChild(listItem);
-            li.setAttribute("padding","0");
-          }
-        }
-        groupElement.appendChild(li);
-        if(groupTemplate.nextSibling){
-          groupTemplate.parentNode.insertBefore(groupElement,groupTemplate.nextSibling);
-        }else{
-          groupTemplate.parentNode.appendChild(groupElement);
-        }
-      }
-      nintendise();
-      let allGroups = document.getElementsByClassName("random-group");
 
-      for (let i = 0; i < allGroups.length; i++) {
-        nintyReload(allGroups[i]);
-      }
-      allGroups[0].scrollIntoView();
-    }
-    function randomWeapons(input) {
-      console.log("pressed!");
-      let oldLabel = input.parentElement;
-      let parent = oldLabel.parentElement
-      let display = oldLabel.style.display;
-      let classList = oldLabel.classList;
-      let newLabel = document.createElement("label");
-      newLabel.style.display = display;
-      newLabel.classList = classList;
-      parent.removeChild(oldLabel);
+            function addLanguageToPage(template, languageName) {
+                let language = template.cloneNode();
+                language.classList.replace("language-template", "language");
+                language.setAttribute("language-code", languageName);
+                language.innerText = TRANSLATE_LANGUAGE_CODES[CURRENT_LANGUAGE][SUPPORTED_LANGUAGES.indexOf(languageName)];
+                language.style.display = "";
+                if (CURRENT_LANGUAGE === languageName) {
+                    language.classList.add("disabled")
+                }
+                template.parentElement.appendChild(language);
+            }
 
-      if (input.checked) {
-        newLabel.textContent = "Weapons ON";
-        newLabel.classList.replace("btn-warning","btn-success");
-      }
-      else {
-        newLabel.textContent = "Weapons OFF";
-        newLabel.classList.replace("btn-success","btn-warning");
-      }
-      newLabel.appendChild(input);
-      parent.appendChild(newLabel);
-    }
-  </script>
-  <div class="row">
-  <input type="button" class="btn btn-light" style="margin-bottom: 1%; margin-top: 1%;" onclick="randomisePlayers()" value="Randomise Players!">
-    <div class="form-check">
-      <label class="form-check-label random-weapons-label btn btn-warning btn-sm">Weapons OFF
-        <input class="is-random-weapons" type="checkbox" autocomplete="off" onclick="randomWeapons(this)" style="display: none" name="is-random-weapons">
-      </label>
+            function changeLanguage(language) {
+                if (!SUPPORTED_LANGUAGES.includes(language)) {
+                    console.error("Language not supported");
+                } else {
+                    localStorage.setItem("savedLanguage", language);
+                    location.reload();
+                }
+            }
+
+            function makeNintendoStyle(element) {
+                element.style.backgroundColor = "#e81c27";
+                element.style.borderStyle = "solid";
+                element.style.borderRadius = "15px";
+                element.style.borderColor = "white";
+                element.style.borderWidth = "0.1rem";
+                element.style.color = "white";
+                element.style.marginBottom = "1%";
+                element.style.marginLeft = "-15px";
+                element.style.marginRight = "-15px";
+                element.style.textAlign = "center";
+            }
+
+            function nintendise() {
+                let nintyElements = document.getElementsByClassName("nintendo-style");
+                for (let i = 0; i < nintyElements.length; i++) {
+                    makeNintendoStyle(nintyElements[i]);
+                }
+            }
+
+            function nintyReload(element) {
+                element.style.backgroundColor = "black";
+                element.style.color = "black";
+                window.setTimeout(function () {
+                    nintendise();
+                }, 30);
+            }
+
+            function styleButton(element) {
+                element.style.color = "black";
+                element.style.boxShadow = "2px 2px 2px grey";
+                element.style.marginBottom = "0.2rem";
+            }
+
+            function styleButtonOn(element) {
+                element.style.backgroundColor = "white";
+                styleButton(element);
+            }
+
+            function styleButtonOff(element) {
+                element.style.backgroundColor = "grey";
+                styleButton(element);
+            }
+
+            function chooseItem(element) {
+                if (element.checked) {
+                    styleButtonOn(element.parentElement);
+                } else {
+                    styleButtonOff(element.parentElement);
+                }
+            }
+
+            function addMode(modeName) {
+                if (MODES.en.includes(modeName)) {
+                    let modeTemplate = document.getElementsByClassName("mode-template")[0];
+                    let modeLabelTemplate = document.getElementsByClassName("mode-template-label")[0];
+                    let modeInputTemplate = document.getElementsByClassName("mode-template-input")[0];
+                    let mode = modeTemplate.cloneNode();
+                    mode.classList.replace("mode-template", "mode");
+                    mode.setAttribute("mode", modeName);
+                    let modeLabel = modeLabelTemplate.cloneNode();
+                    modeLabel.classList.replace("mode-template-label", "mode-label");
+                    let modeInput = modeInputTemplate.cloneNode();
+                    modeInput.classList.replace("mode-template-input", "mode-input");
+                    modeInput.setAttribute("value", modeName);
+                    modeInput.setAttribute("checked", "true");
+                    mode.style.display = "";
+                    modeLabel.textContent = MODES[CURRENT_LANGUAGE][MODES.en.indexOf(modeName)];
+                    styleButtonOn(modeLabel);
+                    modeLabel.appendChild(modeInput);
+                    mode.appendChild(modeLabel);
+                    modeTemplate.parentElement.appendChild(mode);
+                }
+            }
+
+            function addPlayer(playerName) {
+                if (playerName !== "" && playerName !== undefined) {
+                    let playerTemplate = document.getElementsByClassName("player-template")[0];
+                    let playerLabelTemplate = document.getElementsByClassName("player-template-label")[0];
+                    let playerInputTemplate = document.getElementsByClassName("player-template-input")[0];
+                    let playerDeleteTemplate = document.getElementsByClassName("player-template-delete")[0];
+                    let playerForm = document.getElementById("player-form");
+                    let newPlayer = playerTemplate.cloneNode();
+                    newPlayer.classList.replace("player-template", "player");
+                    newPlayer.setAttribute("id", playerName);
+                    let playerLabel = playerLabelTemplate.cloneNode();
+                    playerLabel.classList.remove("player-template-label")
+                    let playerInput = playerInputTemplate.cloneNode();
+                    playerInput.classList.remove("player-template-input")
+                    playerInput.setAttribute("value", playerName);
+                    playerInput.setAttribute("checked", "true");
+                    let playerDelete = playerDeleteTemplate.cloneNode();
+                    newPlayer.style.display = "";
+                    playerLabel.textContent = playerName;
+                    styleButtonOn(playerLabel);
+                    playerLabel.appendChild(playerInput);
+                    playerLabel.appendChild(playerDelete);
+                    newPlayer.appendChild(playerLabel);
+                    playerForm.appendChild(newPlayer);
+                }
+            }
+
+            function removePlayer(playerName) {
+                let player = document.getElementById(playerName);
+                player.parentElement.removeChild(player);
+            }
+
+            function savePlayer(playerName) {
+                playerName = playerName.replace(/[\/\\#,+()$~%.'":*?<>{}]/g, '');
+                let playerNames = [];
+                try {
+                    playerNames = JSON.parse(localStorage.getItem("playerNames"));
+                } catch (e) {
+                    playerNames = [];
+                }
+                playerNames.push(playerName);
+                localStorage.setItem("playerNames", JSON.stringify(playerNames));
+                addPlayer(playerName);
+            }
+
+            function deletePlayer(playerName) {
+                let playerNames = [];
+                try {
+                    playerNames = JSON.parse(localStorage.getItem("playerNames"));
+                } catch (e) {
+                    console.error("Player names could not be parsed for deletion. Should not occur");
+                }
+                playerNames.splice(playerNames.indexOf(playerName), 1);
+                localStorage.setItem("playerNames", JSON.stringify(playerNames));
+                removePlayer(playerName);
+            }
+
+            let playerNames = JSON.parse(localStorage.getItem("playerNames"));
+            for (let i = 0; i < playerNames.length; i++) {
+                addPlayer(playerNames[i])
+            }
+        </script>
     </div>
-  </div>
-  <div class="group-template nintendo-style" style="display:none;color:white;margin:1%">
-    <ul>
-      <li class="group-item-template" style="display: none; list-style-type: none"></li>
-    </ul>
-  </div>
-  <div class="row nintendo-style">
-    <div class="form-check-inline stage-template" style="display: none">
-       <label class="form-check-label stage-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
-         <input class="stage-template-input" style="display: none" type="checkbox" onclick="chooseStage(this)" name="stages" value="StageTemplate">StageTemplate
-       </label>
+    <div style="padding: 0 0.5rem 0.5rem;" class="nintendo-style">
+        <h3>Choose your group size:</h3>
+        <form>
+            <div class="form-check-inline">
+                <label class="form-check-label btn btn-sm" style="font-weight: bold">
+                    <input type="radio" class="form-check-input group-size" style="display: none" id="group-two"
+                           onclick="chooseGroupSize()" name="group-size" value="2">2
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label btn btn-sm" style="font-weight: bold">
+                    <input type="radio" class="form-check-input group-size" style="display: none" id="group-three"
+                           onclick="chooseGroupSize()" name="group-size" value="3">3
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label btn btn-sm" style="font-weight: bold">
+                    <input type="radio" class="form-check-input group-size" style="display: none;" id="group-four"
+                           onclick="chooseGroupSize()" name="group-size" value="4" checked>4
+                </label>
+            </div>
+        </form>
     </div>
-    <input type="button" class="btn btn-success col-sm-2" style="margin: 1%" onclick="randomiseStage()" value="Randomise Stage!">
-    <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="stageName col-sm-4"></p>
-  </div>
-  <script>
-    function randomiseStage() {
-      let randomNumber = Math.floor(Math.random() * MAPS.en.length);
-      let stageText = document.getElementsByClassName("stageName")[0];
-      stageText.innerHTML = MAPS[CURRENT_LANGUAGE][randomNumber];
-      stageText.style.display = "";
-      nintyReload(stageText.parentElement);
-    }
-  </script>
-  <div class="nintendo-style row">
-    <input type="button" class="btn btn-info col-sm-2" style="margin: 1%" onclick="randomiseMode()" value="Randomise Mode!">
-    <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="mode col-sm-4"></p>
-  </div>
-  <script>
-    function randomiseMode() {
-      let modeText = document.getElementsByClassName("mode")[0];
-      let randomNumber = Math.floor(Math.random() * MODES.en.length);
-      modeText.innerHTML = MODES[CURRENT_LANGUAGE][randomNumber];
-      modeText.style.display = "";
-      nintyReload(modeText.parentElement);
-    }
-  </script>
+    <script>
+        function chooseGroupSize() {
+            let groupSizes = document.getElementsByClassName("group-size");
+            for (let i = 0; i < groupSizes.length; i++) {
+                if (groupSizes[i].checked) {
+                    styleButtonOn(groupSizes[i].parentElement);
+                } else {
+                    styleButtonOff(groupSizes[i].parentElement);
+                }
+            }
+        }
+
+        function randomisePlayers() {
+            //Set up random weapon generation
+            let isRandomWeapons = document.getElementsByClassName("is-random-weapons")[0].checked;
+            //Remove previous results
+            let previousGroups = document.getElementsByClassName("random-group");
+            let prevGroupLength = previousGroups.length;
+            for (let i = 0; i < prevGroupLength; i++) {
+                previousGroups[0].remove();
+            }
+            //Get all checked players
+            let playerForm = document.getElementById("player-form");
+            let playerList = [];
+            for (let i = 0; i < playerForm.children.length; i++) {
+                if (playerForm.children[i].classList.contains("player") &&
+                    playerForm.children[i].children[0].children[0].checked) {
+                    playerList.push(playerForm.children[i].children[0].children[0].getAttribute("value"));
+                }
+            }
+            //Get group size
+            let groupSizes = document.getElementsByName('group-size');
+            let groupSize;
+            for (let i = 0, length = groupSizes.length; i < length; i++) {
+                if (groupSizes[i].checked) {
+                    groupSize = groupSizes[i].value;
+                    break;
+                }
+            }
+            //Assign players random numbers and organise them so
+            let orderedPlayerList = [];
+            for (let i = 0, length = playerList.length; i < length; i++) {
+                let randomNumber = Math.floor(Math.random() * 500);
+                orderedPlayerList.push([randomNumber, playerList[i]]);
+            }
+            orderedPlayerList.sort(function (a, b) {
+                return a[0] - b[0]
+            });
+            //Add results to page
+            let groupTemplate = document.getElementsByClassName("group-template")[0];
+            while (orderedPlayerList.length > 0) {
+                let groupElement = groupTemplate.cloneNode();
+                groupElement.classList.remove("group-template");
+                groupElement.classList.add("random-group");
+                groupElement.style.display = "";
+                let li = document.createElement("ul");
+                li.style.padding = "0";
+                for (let i = 0; i < groupSize; i++) {
+                    let orderedPlayer = orderedPlayerList.pop();
+                    if (orderedPlayer !== undefined) {
+                        let listItem = document.getElementsByClassName("group-item-template")[0].cloneNode();
+                        listItem.style.display = "";
+                        listItem.classList.remove("group-item-template");
+                        listItem.textContent = orderedPlayer[1];
+                        //Add random weapon if checked
+                        if (isRandomWeapons) {
+                            let weaponText = document.createElement("p");
+                            weaponText.style.color = "yellow";
+                            weaponText.innerText = WEAPONS[Math.floor(Math.random() * WEAPONS.length)];
+                            listItem.appendChild(weaponText);
+                        }
+                        li.appendChild(listItem);
+                        li.setAttribute("padding", "0");
+                    }
+                }
+                groupElement.appendChild(li);
+                if (groupTemplate.nextSibling) {
+                    groupTemplate.parentNode.insertBefore(groupElement, groupTemplate.nextSibling);
+                } else {
+                    groupTemplate.parentNode.appendChild(groupElement);
+                }
+            }
+            nintendise();
+            let allGroups = document.getElementsByClassName("random-group");
+
+            for (let i = 0; i < allGroups.length; i++) {
+                nintyReload(allGroups[i]);
+            }
+            allGroups[0].scrollIntoView();
+        }
+
+        function randomWeapons(input) {
+            console.log("pressed!");
+            let oldLabel = input.parentElement;
+            let parent = oldLabel.parentElement
+            let display = oldLabel.style.display;
+            let classList = oldLabel.classList;
+            let newLabel = document.createElement("label");
+            newLabel.style.display = display;
+            newLabel.classList = classList;
+            parent.removeChild(oldLabel);
+
+            if (input.checked) {
+                newLabel.textContent = "Weapons ON";
+                newLabel.classList.replace("btn-warning", "btn-success");
+            } else {
+                newLabel.textContent = "Weapons OFF";
+                newLabel.classList.replace("btn-success", "btn-warning");
+            }
+            newLabel.appendChild(input);
+            parent.appendChild(newLabel);
+        }
+    </script>
+    <div class="row">
+        <input type="button" class="btn btn-light" style="margin-bottom: 1%; margin-top: 1%;"
+               onclick="randomisePlayers()" value="Randomise Players!">
+        <div class="form-check">
+            <label class="form-check-label random-weapons-label btn btn-warning btn-sm">Weapons OFF
+                <input class="is-random-weapons" type="checkbox" autocomplete="off" onclick="randomWeapons(this)"
+                       style="display: none" name="is-random-weapons">
+            </label>
+        </div>
+    </div>
+    <div class="group-template nintendo-style" style="display:none;color:white;margin:1%">
+        <ul>
+            <li class="group-item-template" style="display: none; list-style-type: none"></li>
+        </ul>
+    </div>
+    <div class="row nintendo-style">
+        <div class="form-check-inline stage-template" style="display: none">
+            <label class="form-check-label stage-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
+                <input class="stage-template-input" style="display: none" type="checkbox" onclick="chooseStage(this)"
+                       name="stages" value="StageTemplate">StageTemplate
+            </label>
+        </div>
+        <input type="button" class="btn btn-success col-sm-2" style="margin: 1%" onclick="randomiseStage()"
+               value="Randomise Stage!">
+        <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="stageName col-sm-4"></p>
+    </div>
+    <script>
+        function randomiseStage() {
+            let randomNumber = Math.floor(Math.random() * MAPS.en.length);
+            let stageText = document.getElementsByClassName("stageName")[0];
+            stageText.innerHTML = MAPS[CURRENT_LANGUAGE][randomNumber];
+            stageText.style.display = "";
+            nintyReload(stageText.parentElement);
+        }
+    </script>
+    <div class="nintendo-style">
+        <div class="row" style="margin: 1%">
+            <div class="form-check-inline mode-template" style="display: none">
+                <label class="form-check-label mode-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
+                    <input class="mode-template-input" style="display: none" type="checkbox"
+                           onclick="chooseItem(this)" name="modes" value="ModeTemplate">ModeTemplate
+                </label>
+            </div>
+        </div>
+        <div class="row" style="margin: 1%">
+            <input type="button" class="btn btn-info" onclick="randomiseMode()"
+                   value="Randomise Mode!">
+            <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="random-mode"></p>
+        </div>
+    </div>
+    <script>
+        function randomiseMode() {
+            let allModeInputs = document.getElementsByClassName("mode-input");
+            let allCheckedModes = [];
+            for (let i = 0; i < allModeInputs.length; i++) {
+                if (allModeInputs[i].checked) {
+                    allCheckedModes.push(allModeInputs[i].getAttribute("value"));
+                }
+            }
+            if (allCheckedModes.length > 1) {
+                let modeText = document.getElementsByClassName("random-mode")[0];
+                let randomNumber = Math.floor(Math.random() * allCheckedModes.length);
+                let modeIndex = MODES.en.indexOf(allCheckedModes[randomNumber]);
+                modeText.innerHTML = MODES[CURRENT_LANGUAGE][modeIndex];
+                modeText.style.display = "";
+                nintyReload(modeText.parentElement.parentElement);
+            }
+        }
+    </script>
 </div>
-<img class="img-fluid mx-auto d-block" style="border-radius: 25px; margin-top: 2%" src="https://i.imgur.com/4sYjp3T.png" title="Hardcore Noobs" alt="Hardcore Noobs"/>
+<img class="img-fluid mx-auto d-block" style="border-radius: 25px; margin-top: 2%" src="https://i.imgur.com/4sYjp3T.png"
+     title="Hardcore Noobs" alt="Hardcore Noobs"/>
 <p class="float-right" style="color: white">Created by Richard Sutton</p>
 </body>
-<script>nintendise();chooseGroupSize();</script>
+<script>nintendise();
+chooseGroupSize();
+for (let i = 0; i < MODES.en.length; i++) {
+    addMode(MODES.en[i])
+}
+</script>
 
 </html>
