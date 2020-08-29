@@ -474,6 +474,29 @@
                 }
             }
 
+            function addMap(mapName) {
+                if (MAPS.en.includes(mapName)) {
+                    let mapTemplate = document.getElementsByClassName("map-template")[0];
+                    let mapLabelTemplate = document.getElementsByClassName("map-template-label")[0];
+                    let mapInputTemplate = document.getElementsByClassName("map-template-input")[0];
+                    let map = mapTemplate.cloneNode();
+                    map.classList.replace("map-template", "map");
+                    map.setAttribute("map", mapName);
+                    let mapLabel = mapLabelTemplate.cloneNode();
+                    mapLabel.classList.replace("map-template-label", "map-label");
+                    let mapInput = mapInputTemplate.cloneNode();
+                    mapInput.classList.replace("map-template-input", "map-input");
+                    mapInput.setAttribute("value", mapName);
+                    mapInput.setAttribute("checked", "true");
+                    map.style.display = "";
+                    mapLabel.textContent = MAPS[CURRENT_LANGUAGE][MAPS.en.indexOf(mapName)];
+                    styleButtonOn(mapLabel);
+                    mapLabel.appendChild(mapInput);
+                    map.appendChild(mapLabel);
+                    mapTemplate.parentElement.appendChild(map);
+                }
+            }
+
             function addPlayer(playerName) {
                 if (playerName !== "" && playerName !== undefined) {
                     let playerTemplate = document.getElementsByClassName("player-template")[0];
@@ -531,7 +554,7 @@
                 removePlayer(playerName);
             }
 
-            let playerNames = JSON.parse(localStorage.getItem("playerNames"));
+            let playerNames = (JSON.parse(localStorage.getItem("playerNames"))).sort();
             for (let i = 0; i < playerNames.length; i++) {
                 addPlayer(playerNames[i])
             }
@@ -688,24 +711,39 @@
             <li class="group-item-template" style="display: none; list-style-type: none"></li>
         </ul>
     </div>
-    <div class="row nintendo-style">
-        <div class="form-check-inline stage-template" style="display: none">
-            <label class="form-check-label stage-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
-                <input class="stage-template-input" style="display: none" type="checkbox" onclick="chooseStage(this)"
-                       name="stages" value="StageTemplate">StageTemplate
+    <div class="nintendo-style">
+        <div class="row" style="margin: 1%">
+        <div class="form-check-inline map-template" style="display: none">
+            <label class="form-check-label map-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
+                <input class="map-template-input" style="display: none" type="checkbox" onclick="chooseItem(this)"
+                       name="maps" value="MapTemplate">MapTemplate
             </label>
         </div>
-        <input type="button" class="btn btn-success col-sm-2" style="margin: 1%" onclick="randomiseStage()"
+        </div>
+        <div class="row" style="margin: 1%">
+        <input type="button" class="btn btn-success" onclick="randomiseMap()"
                value="Randomise Stage!">
-        <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="stageName col-sm-4"></p>
+        <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="random-map"></p>
+        </div>
     </div>
+        
     <script>
-        function randomiseStage() {
-            let randomNumber = Math.floor(Math.random() * MAPS.en.length);
-            let stageText = document.getElementsByClassName("stageName")[0];
-            stageText.innerHTML = MAPS[CURRENT_LANGUAGE][randomNumber];
-            stageText.style.display = "";
-            nintyReload(stageText.parentElement);
+        function randomiseMap() {
+            let allMapInputs = document.getElementsByClassName("map-input");
+            let allCheckedMaps = [];
+            for (let i = 0; i < allMapInputs.length; i++) {
+                if (allMapInputs[i].checked) {
+                    allCheckedMaps.push(allMapInputs[i].getAttribute("value"));
+                }
+            }
+            if (allCheckedMaps.length > 1) {
+                let mapText = document.getElementsByClassName("random-map")[0];
+                let randomNumber = Math.floor(Math.random() * allCheckedMaps.length);
+                let mapIndex = MAPS.en.indexOf(allCheckedMaps[randomNumber]);
+                mapText.innerHTML = MAPS[CURRENT_LANGUAGE][mapIndex];
+                mapText.style.display = "";
+                nintyReload(mapText.parentElement.parentElement);
+            }
         }
     </script>
     <div class="nintendo-style">
@@ -749,8 +787,13 @@
 </body>
 <script>nintendise();
 chooseGroupSize();
+let sortedMaps = MAPS[CURRENT_LANGUAGE].sort();
+for (let i = 0; i < sortedMaps.length; i++) {
+    let nativeIndex = MAPS[CURRENT_LANGUAGE].indexOf(sortedMaps[i]);
+    addMap(MAPS.en[nativeIndex]);
+}
 for (let i = 0; i < MODES.en.length; i++) {
-    addMode(MODES.en[i])
+    addMode(MODES.en[i]);
 }
 </script>
 
