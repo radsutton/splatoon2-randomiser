@@ -451,6 +451,29 @@
                 }
             }
 
+            function addWeapon(weaponName) {
+                if (WEAPONS.en.includes(weaponName)) {
+                    let weaponTemplate = document.getElementsByClassName("weapon-template")[0];
+                    let weaponLabelTemplate = document.getElementsByClassName("weapon-template-label")[0];
+                    let weaponInputTemplate = document.getElementsByClassName("weapon-template-input")[0];
+                    let weapon = weaponTemplate.cloneNode();
+                    weapon.classList.replace("weapon-template", "weapon");
+                    weapon.setAttribute("weapon", weaponName);
+                    let weaponLabel = weaponLabelTemplate.cloneNode();
+                    weaponLabel.classList.replace("weapon-template-label", "weapon-label");
+                    let weaponInput = weaponInputTemplate.cloneNode();
+                    weaponInput.classList.replace("weapon-template-input", "weapon-input");
+                    weaponInput.setAttribute("value", weaponName);
+                    weaponInput.setAttribute("checked", "true");
+                    weapon.style.display = "";
+                    weaponLabel.textContent = WEAPONS[CURRENT_LANGUAGE][WEAPONS.en.indexOf(weaponName)];
+                    styleButtonOn(weaponLabel);
+                    weaponLabel.appendChild(weaponInput);
+                    weapon.appendChild(weaponLabel);
+                    weaponTemplate.parentElement.appendChild(weapon);
+                }
+            }
+
             function addMode(modeName) {
                 if (MODES.en.includes(modeName)) {
                     let modeTemplate = document.getElementsByClassName("mode-template")[0];
@@ -651,7 +674,7 @@
                         if (isRandomWeapons) {
                             let weaponText = document.createElement("p");
                             weaponText.style.color = "yellow";
-                            weaponText.innerText = WEAPONS[Math.floor(Math.random() * WEAPONS.length)];
+                            weaponText.innerText = WEAPONS[CURRENT_LANGUAGE][Math.floor(Math.random() * WEAPONS[CURRENT_LANGUAGE].length)];
                             listItem.appendChild(weaponText);
                         }
                         li.appendChild(listItem);
@@ -675,7 +698,6 @@
         }
 
         function randomWeapons(input) {
-            console.log("pressed!");
             let oldLabel = input.parentElement;
             let parent = oldLabel.parentElement
             let display = oldLabel.style.display;
@@ -780,6 +802,40 @@
             }
         }
     </script>
+    <div class="nintendo-style">
+        <div class="row" style="margin: 1%">
+            <div class="form-check-inline weapon-template" style="display: none">
+                <label class="form-check-label weapon-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
+                    <input class="weapon-template-input" style="display: none" type="checkbox"
+                           onclick="chooseItem(this)" name="weapons" value="WeaponTemplate">WeaponTemplate
+                </label>
+            </div>
+        </div>
+        <div class="row" style="margin: 1%">
+            <input type="button" class="btn btn-success" onclick="randomiseWeapon()"
+                   value="Randomise Weapon!">
+            <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="random-weapon"></p>
+        </div>
+    </div>
+    <script>
+        function randomiseWeapon() {
+            let allWeaponInputs = document.getElementsByClassName("weapon-input");
+            let allCheckedWeapons = [];
+            for (let i = 0; i < allWeaponInputs.length; i++) {
+                if (allWeaponInputs[i].checked) {
+                    allCheckedWeapons.push(allWeaponInputs[i].getAttribute("value"));
+                }
+            }
+            if (allCheckedWeapons.length > 1) {
+                let weaponText = document.getElementsByClassName("random-weapon")[0];
+                let randomNumber = Math.floor(Math.random() * allCheckedWeapons.length);
+                let weaponIndex = WEAPONS.en.indexOf(allCheckedWeapons[randomNumber]);
+                weaponText.innerHTML = WEAPONS[CURRENT_LANGUAGE][weaponIndex];
+                weaponText.style.display = "";
+                nintyReload(weaponText.parentElement.parentElement);
+            }
+        }
+    </script>
 </div>
 <img class="img-fluid mx-auto d-block" style="border-radius: 25px; margin-top: 2%" src="https://i.imgur.com/4sYjp3T.png"
      title="Hardcore Noobs" alt="Hardcore Noobs"/>
@@ -794,6 +850,11 @@ for (let i = 0; i < sortedMaps.length; i++) {
 }
 for (let i = 0; i < MODES.en.length; i++) {
     addMode(MODES.en[i]);
+}
+let sortedWeapons = WEAPONS[CURRENT_LANGUAGE].sort();
+for (let i = 0; i < sortedWeapons.length; i++) {
+    let nativeIndex = WEAPONS[CURRENT_LANGUAGE].indexOf(sortedWeapons[i]);
+    addWeapon(WEAPONS.en[nativeIndex]);
 }
 </script>
 
