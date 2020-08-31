@@ -52,7 +52,7 @@
         <div class="input-group">
             <input type="text" class="form-control" id="add-player">
             <span class="input-group-btn">
-        <button class="btn btn-light" onclick="savePlayer(document.getElementById('add-player').value)" type="button">Add Player!</button>
+        <button class="btn btn-light" onclick="let element = document.getElementById('add-player'); savePlayer(element.value); element.value = ''" type="button">Add Player!</button>
       </span>
         </div>
         <script>
@@ -350,6 +350,38 @@
                     "Zink Mini Splatling"]
             };
 
+            let CURRENT_NAMES;
+            if (localStorage.getItem("savedPlayers") !== null) {
+                CURRENT_NAMES = JSON.parse(localStorage.getItem("savedPlayers"));
+            } else {
+                CURRENT_NAMES = [];
+                localStorage.setItem("savedPlayers", JSON.stringify(CURRENT_NAMES));
+            }
+
+            let CURRENT_MODES;
+            if (localStorage.getItem("savedModes") !== null) {
+                CURRENT_MODES = JSON.parse(localStorage.getItem("savedModes"));
+            } else {
+                CURRENT_MODES = Array.from("0".repeat(MODES.en.length));
+                localStorage.setItem("savedModes", JSON.stringify(CURRENT_MODES));
+            }
+
+            let CURRENT_MAPS;
+            if (localStorage.getItem("savedMaps") !== null) {
+                CURRENT_MAPS = JSON.parse(localStorage.getItem("savedMaps"));
+            } else {
+                CURRENT_MAPS = Array.from("0".repeat(MAPS.en.length));
+                localStorage.setItem("savedMaps", JSON.stringify(CURRENT_MAPS));
+            }
+
+            let CURRENT_WEAPONS;
+            if (localStorage.getItem("savedWeapons") !== null) {
+                CURRENT_WEAPONS = JSON.parse(localStorage.getItem("savedWeapons"));
+            } else {
+                CURRENT_WEAPONS = Array.from("0".repeat(WEAPONS.en.length));
+                localStorage.setItem("savedWeapons", JSON.stringify(CURRENT_WEAPONS));
+            }
+
             let CURRENT_LANGUAGE;
             if (localStorage.getItem("savedLanguage") !== null) {
                 CURRENT_LANGUAGE = localStorage.getItem("savedLanguage");
@@ -443,16 +475,45 @@
                 styleButton(element);
             }
 
+            function saveItem(element, isEnabled) {
+                let type = element.getAttribute("name");
+                let item = element.getAttribute("value");
+                let arrayItem;
+                if(isEnabled) {
+                    arrayItem = "0";
+                }
+                else {
+                    arrayItem = "1";
+                }
+                switch(type) {
+                    case "modes":
+                        CURRENT_MODES[MODES.en.indexOf(item)] = arrayItem;
+                        localStorage.setItem("savedModes", JSON.stringify(CURRENT_MODES));
+                        break;
+                    case "maps":
+                        CURRENT_MAPS[MAPS.en.indexOf(item)] = arrayItem;
+                        localStorage.setItem("savedMaps", JSON.stringify(CURRENT_MAPS));
+                        break;
+                    case "weapons":
+                        CURRENT_WEAPONS[WEAPONS.en.indexOf(item)] = arrayItem;
+                        localStorage.setItem("savedWeapons", JSON.stringify(CURRENT_WEAPONS));
+                        break;
+                }
+            }
+
             function chooseItem(element) {
                 if (element.checked) {
                     styleButtonOn(element.parentElement);
+                    saveItem(element, true);
                 } else {
                     styleButtonOff(element.parentElement);
+                    saveItem(element, false);
                 }
             }
 
             function addWeapon(weaponName) {
                 if (WEAPONS.en.includes(weaponName)) {
+                    let index = WEAPONS.en.indexOf(weaponName);
                     let weaponTemplate = document.getElementsByClassName("weapon-template")[0];
                     let weaponLabelTemplate = document.getElementsByClassName("weapon-template-label")[0];
                     let weaponInputTemplate = document.getElementsByClassName("weapon-template-input")[0];
@@ -464,10 +525,16 @@
                     let weaponInput = weaponInputTemplate.cloneNode();
                     weaponInput.classList.replace("weapon-template-input", "weapon-input");
                     weaponInput.setAttribute("value", weaponName);
-                    weaponInput.setAttribute("checked", "true");
                     weapon.style.display = "";
-                    weaponLabel.textContent = WEAPONS[CURRENT_LANGUAGE][WEAPONS.en.indexOf(weaponName)];
-                    styleButtonOn(weaponLabel);
+                    weaponLabel.textContent = WEAPONS[CURRENT_LANGUAGE][index];
+                    if (CURRENT_WEAPONS[index] === "0") {
+                        weaponInput.setAttribute("checked", "true");
+                        styleButtonOn(weaponLabel);
+                    }
+                    else {
+                        weaponInput.setAttribute("checked", "false");
+                        styleButtonOff(weaponLabel);
+                    }
                     weaponLabel.appendChild(weaponInput);
                     weapon.appendChild(weaponLabel);
                     weaponTemplate.parentElement.appendChild(weapon);
@@ -476,6 +543,7 @@
 
             function addMode(modeName) {
                 if (MODES.en.includes(modeName)) {
+                    let index = MODES.en.indexOf(modeName);
                     let modeTemplate = document.getElementsByClassName("mode-template")[0];
                     let modeLabelTemplate = document.getElementsByClassName("mode-template-label")[0];
                     let modeInputTemplate = document.getElementsByClassName("mode-template-input")[0];
@@ -487,10 +555,16 @@
                     let modeInput = modeInputTemplate.cloneNode();
                     modeInput.classList.replace("mode-template-input", "mode-input");
                     modeInput.setAttribute("value", modeName);
-                    modeInput.setAttribute("checked", "true");
                     mode.style.display = "";
-                    modeLabel.textContent = MODES[CURRENT_LANGUAGE][MODES.en.indexOf(modeName)];
-                    styleButtonOn(modeLabel);
+                    modeLabel.textContent = MODES[CURRENT_LANGUAGE][index];
+                    if (CURRENT_MODES[index] === "0") {
+                        modeInput.setAttribute("checked", "true");
+                        styleButtonOn(modeLabel);
+                    }
+                    else {
+                        modeInput.setAttribute("checked", "false");
+                        styleButtonOff(modeLabel);
+                    }
                     modeLabel.appendChild(modeInput);
                     mode.appendChild(modeLabel);
                     modeTemplate.parentElement.appendChild(mode);
@@ -499,6 +573,7 @@
 
             function addMap(mapName) {
                 if (MAPS.en.includes(mapName)) {
+                    let index = MAPS.en.indexOf(mapName);
                     let mapTemplate = document.getElementsByClassName("map-template")[0];
                     let mapLabelTemplate = document.getElementsByClassName("map-template-label")[0];
                     let mapInputTemplate = document.getElementsByClassName("map-template-input")[0];
@@ -510,10 +585,16 @@
                     let mapInput = mapInputTemplate.cloneNode();
                     mapInput.classList.replace("map-template-input", "map-input");
                     mapInput.setAttribute("value", mapName);
-                    mapInput.setAttribute("checked", "true");
                     map.style.display = "";
-                    mapLabel.textContent = MAPS[CURRENT_LANGUAGE][MAPS.en.indexOf(mapName)];
-                    styleButtonOn(mapLabel);
+                    mapLabel.textContent = MAPS[CURRENT_LANGUAGE][index];
+                    if (CURRENT_MAPS[index] === "0") {
+                        mapInput.setAttribute("checked", "true");
+                        styleButtonOn(mapLabel);
+                    }
+                    else {
+                        mapInput.setAttribute("checked", "false");
+                        styleButtonOff(mapLabel);
+                    }
                     mapLabel.appendChild(mapInput);
                     map.appendChild(mapLabel);
                     mapTemplate.parentElement.appendChild(map);
@@ -554,32 +635,15 @@
 
             function savePlayer(playerName) {
                 playerName = playerName.replace(/[\/\\#,+()$~%.'":*?<>{}]/g, '');
-                let playerNames = [];
-                try {
-                    playerNames = JSON.parse(localStorage.getItem("playerNames"));
-                } catch (e) {
-                    playerNames = [];
-                }
-                playerNames.push(playerName);
-                localStorage.setItem("playerNames", JSON.stringify(playerNames));
+                CURRENT_NAMES.push(playerName);
+                localStorage.setItem("savedPlayers", JSON.stringify(CURRENT_NAMES));
                 addPlayer(playerName);
             }
 
             function deletePlayer(playerName) {
-                let playerNames = [];
-                try {
-                    playerNames = JSON.parse(localStorage.getItem("playerNames"));
-                } catch (e) {
-                    console.error("Player names could not be parsed for deletion. Should not occur");
-                }
-                playerNames.splice(playerNames.indexOf(playerName), 1);
-                localStorage.setItem("playerNames", JSON.stringify(playerNames));
+                CURRENT_NAMES.splice(CURRENT_NAMES.indexOf(playerName), 1);
+                localStorage.setItem("savedPlayers", JSON.stringify(CURRENT_NAMES));
                 removePlayer(playerName);
-            }
-
-            let playerNames = (JSON.parse(localStorage.getItem("playerNames"))).sort();
-            for (let i = 0; i < playerNames.length; i++) {
-                addPlayer(playerNames[i])
             }
         </script>
     </div>
@@ -843,6 +907,11 @@
 </body>
 <script>nintendise();
 chooseGroupSize();
+let sortedNames = CURRENT_NAMES.sort();
+for (let i = 0; i < sortedNames.length; i++) {
+    addPlayer(sortedNames[i]);
+}
+
 let sortedMaps = MAPS[CURRENT_LANGUAGE].sort();
 for (let i = 0; i < sortedMaps.length; i++) {
     let nativeIndex = MAPS[CURRENT_LANGUAGE].indexOf(sortedMaps[i]);
