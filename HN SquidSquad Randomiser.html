@@ -1,6 +1,5 @@
 <!doctype html>
 <html class="no-js" lang="" style="font-family:serif; font-size:large">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Bootstrap v4 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -13,6 +12,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/405599a3fb.js" crossorigin="anonymous"></script>
 
 <head>
     <meta charset="utf-8">
@@ -52,7 +52,9 @@
         <div class="input-group">
             <input type="text" class="form-control" id="add-player">
             <span class="input-group-btn">
-        <button class="btn btn-light" onclick="let element = document.getElementById('add-player'); savePlayer(element.value); element.value = ''" type="button">Add Player!</button>
+        <button class="btn btn-light"
+                onclick="let element = document.getElementById('add-player'); savePlayer(element.value); element.value = ''"
+                type="button">Add Player!</button>
       </span>
         </div>
         <script>
@@ -479,13 +481,12 @@
                 let type = element.getAttribute("name");
                 let item = element.getAttribute("value");
                 let arrayItem;
-                if(isEnabled) {
+                if (isEnabled) {
                     arrayItem = "0";
-                }
-                else {
+                } else {
                     arrayItem = "1";
                 }
-                switch(type) {
+                switch (type) {
                     case "modes":
                         CURRENT_MODES[MODES.en.indexOf(item)] = arrayItem;
                         localStorage.setItem("savedModes", JSON.stringify(CURRENT_MODES));
@@ -530,8 +531,7 @@
                     if (CURRENT_WEAPONS[index] === "0") {
                         weaponInput.setAttribute("checked", "true");
                         styleButtonOn(weaponLabel);
-                    }
-                    else {
+                    } else {
                         weaponInput.setAttribute("checked", "false");
                         styleButtonOff(weaponLabel);
                     }
@@ -560,8 +560,7 @@
                     if (CURRENT_MODES[index] === "0") {
                         modeInput.setAttribute("checked", "true");
                         styleButtonOn(modeLabel);
-                    }
-                    else {
+                    } else {
                         modeInput.setAttribute("checked", "false");
                         styleButtonOff(modeLabel);
                     }
@@ -590,8 +589,7 @@
                     if (CURRENT_MAPS[index] === "0") {
                         mapInput.setAttribute("checked", "true");
                         styleButtonOn(mapLabel);
-                    }
-                    else {
+                    } else {
                         mapInput.setAttribute("checked", "false");
                         styleButtonOff(mapLabel);
                     }
@@ -799,20 +797,20 @@
     </div>
     <div class="nintendo-style">
         <div class="row" style="margin: 1%">
-        <div class="form-check-inline map-template" style="display: none">
-            <label class="form-check-label map-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
-                <input class="map-template-input" style="display: none" type="checkbox" onclick="chooseItem(this)"
-                       name="maps" value="MapTemplate">MapTemplate
-            </label>
-        </div>
+            <div class="form-check-inline map-template" style="display: none">
+                <label class="form-check-label map-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
+                    <input class="map-template-input" style="display: none" type="checkbox" onclick="chooseItem(this)"
+                           name="maps" value="MapTemplate">MapTemplate
+                </label>
+            </div>
         </div>
         <div class="row" style="margin: 1%">
-        <input type="button" class="btn btn-success" onclick="randomiseMap()"
-               value="Randomise Stage!">
-        <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="random-map"></p>
+            <input type="button" class="btn btn-success" onclick="randomiseMap()"
+                   value="Randomise Stage!">
+            <p style="font-size: x-large;margin: 1rem;font-weight: bold;display: none;" class="random-map"></p>
         </div>
     </div>
-        
+
     <script>
         function randomiseMap() {
             let allMapInputs = document.getElementsByClassName("map-input");
@@ -899,7 +897,64 @@
                 nintyReload(weaponText.parentElement.parentElement);
             }
         }
+
+        function importConfig(element) {
+            let data;
+            try {
+                data = JSON.parse(element.value);
+                for(let i in data) {
+                    i = i.replace(/[\/\\#,+()$~%.'":*?<>{}]/g, '')
+                }
+                Object.keys(data).forEach(function (k) {
+                    localStorage.setItem(k, data[k]);
+                });
+                element.value = "";
+                location.reload();
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function exportConfig(element) {
+            element.value = JSON.stringify(localStorage);
+        }
     </script>
+</div>
+<div id="import-export">
+
+    <div class="card nintendo-style">
+        <div class="card-header" onclick="$('.collapse-import').collapse('toggle'); document.getElementById('import').scrollIntoView();">
+            Import Configuration
+            <i class="fas fa-angle-down" style="right: 2rem; position: absolute;"></i>
+        </div>
+        <div id="import" class="collapse collapse-import" data-parent="#import-export">
+            <div class="card-body">
+                <label style="display: none" for="import-area">Copy the configuration here:</label>
+                <textarea id="import-area" name="import" placeholder="Insert here..." rows="4" cols="50"></textarea>
+                <input type="button" class="btn btn-success"
+                       onclick="importConfig(document.getElementById('import-area'))"
+                       value="Import">
+            </div>
+        </div>
+    </div>
+
+    <div class="card nintendo-style">
+        <div class="card-header" onclick="$('.collapse-export').collapse('toggle'); document.getElementById('export').scrollIntoView();">
+            Export Configuration
+            <i class="fas fa-angle-down" style="right: 2rem; position: absolute;"></i>
+        </div>
+        <div id="export" class="collapse collapse-export" data-parent="#import-export">
+            <div class="card-body">
+                <label style="display: none" for="export-area">Copy the configuration from here</label>
+                <textarea id="export-area" readonly name="export" placeholder="Copy from here..." rows="4"
+                          cols="50"></textarea>
+                <input type="button" class="btn btn-success"
+                       onclick="exportConfig(document.getElementById('export-area'))"
+                       value="Export">
+            </div>
+        </div>
+    </div>
+
 </div>
 <img class="img-fluid mx-auto d-block" style="border-radius: 25px; margin-top: 2%" src="https://i.imgur.com/4sYjp3T.png"
      title="Hardcore Noobs" alt="Hardcore Noobs"/>
