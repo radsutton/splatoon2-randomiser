@@ -36,7 +36,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         de: ["Englisch", "Deutsch"]
     };
     const TEXT = {
-        en: ["Language", "Choose ypur players:", "Add Player!", "Choose your group size:", "Randomise Players!",
+        en: ["Language", "Choose your players:", "Add Player!", "Choose your group size:", "Randomise Players!",
             "Weapons OFF", "Weapons ON", "Randomise Stage!", "Randomise Mode!", "Randomise Weapon!", "Import Configuration",
             "Insert here...", "Import", "Export Configuration", "Copy from here...", "Export", "Created by Richard Sutton"],
         de: ["Sprache", "Spieler auswählen:", "Spieler zufügen", "Gruppengröße auswählen:", "Spieler zufällig einordnen!",
@@ -332,6 +332,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             "Zink Mini Splatling"]
     };
 
+    let CURRENT_IS_WEAPONS_ON;
+    if (localStorage.getItem("savedIsWeaponOn") !== null) {
+        CURRENT_IS_WEAPONS_ON = JSON.parse(localStorage.getItem("savedIsWeaponOn"));
+    } else {
+        CURRENT_IS_WEAPONS_ON = false;
+        localStorage.setItem("savedIsWeaponOn", JSON.stringify(CURRENT_IS_WEAPONS_ON));
+    }
+
     let CURRENT_NAMES;
     if (localStorage.getItem("savedPlayers") !== null) {
         CURRENT_NAMES = JSON.parse(localStorage.getItem("savedPlayers"));
@@ -413,7 +421,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         for (let i = 0; i < SUPPORTED_LANGUAGES.length; i++) {
             addLanguageToPage(languageTemplate, SUPPORTED_LANGUAGES[i]);
         }
+
         translateAll();
+
+        let weaponButton = document.getElementsByClassName("is-random-weapons")[0];
+        console.log(weaponButton);
+        weaponButton.checked = CURRENT_IS_WEAPONS_ON;
+        randomWeapons(weaponButton);
 
     }
 
@@ -778,10 +792,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         if (input.checked) {
             newLabel.classList.replace("btn-warning", "btn-success");
             newLabel.textContent = TEXT[CURRENT_LANGUAGE][6];
+            CURRENT_IS_WEAPONS_ON = true;
         } else {
             newLabel.classList.replace("btn-success", "btn-warning");
             newLabel.textContent = TEXT[CURRENT_LANGUAGE][5];
+            CURRENT_IS_WEAPONS_ON = false;
         }
+        localStorage.setItem("savedIsWeaponOn", JSON.stringify(CURRENT_IS_WEAPONS_ON));
         newLabel.appendChild(input);
         parent.appendChild(newLabel);
     }
