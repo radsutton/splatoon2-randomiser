@@ -925,8 +925,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 });
                 element.value = "";
                 location.reload();
+                element.style.backgroundColor = "green";
             } catch (e) {
-                return false;
+                element.style.backgroundColor = "red";
+            }
+            finally {
+                setTimeout(function(){  element.style.backgroundColor = "#fff"; }, 1000);
             }
         }
 
