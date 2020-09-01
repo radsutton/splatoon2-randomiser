@@ -1,5 +1,20 @@
+<!--HN SquidSquad Randomiser is a single page app to replace the poor in-game random pickers, just copy it onto your computer or phone and go!
+Copyright (C) 2020  Richard Anthony David Sutton
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 <!doctype html>
-<html class="no-js" lang="" style="font-family:serif; font-size:large">
+<html class="no-js" lang="" style="font-family:serif; font-size:large">-->
 <!-- Bootstrap v4 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -928,9 +943,9 @@
             <i class="fas fa-angle-down" style="right: 2rem; position: absolute;"></i>
         </div>
         <div id="import" class="collapse collapse-import" data-parent="#import-export">
-            <div class="card-body">
+            <div class="card-body form-group">
                 <label style="display: none" for="import-area">Copy the configuration here:</label>
-                <textarea id="import-area" name="import" placeholder="Insert here..." rows="4" cols="50"></textarea>
+                <textarea id="import-area" class="form-control" name="import" placeholder="Insert here..." rows="4" cols="50"></textarea>
                 <input type="button" class="btn btn-success"
                        onclick="importConfig(document.getElementById('import-area'))"
                        value="Import">
@@ -944,9 +959,9 @@
             <i class="fas fa-angle-down" style="right: 2rem; position: absolute;"></i>
         </div>
         <div id="export" class="collapse collapse-export" data-parent="#import-export">
-            <div class="card-body">
+            <div class="card-body form-group">
                 <label style="display: none" for="export-area">Copy the configuration from here</label>
-                <textarea id="export-area" readonly name="export" placeholder="Copy from here..." rows="4"
+                <textarea id="export-area" class="form-control" readonly name="export" placeholder="Copy from here..." rows="4"
                           cols="50"></textarea>
                 <input type="button" class="btn btn-success"
                        onclick="exportConfig(document.getElementById('export-area'))"
