@@ -12,9 +12,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.-->
 <!doctype html>
-<html class="no-js" lang="" style="font-family:serif; font-size:large">-->
+<html class="no-js" lang="" style="font-family:serif; font-size:large">
 <!-- Bootstrap v4 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -52,8 +52,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         de: ["Buckelwal-Piste", "Nacre Academy", "Muränentürme", "Molluskelbude", "Heilbutt-Hafen", "Seeigel-Rockbühne", "Störwerft", "Korallenviertel", "Manta Maria", "Tümmlerkuppel", "Grätenkanal", "Punkasius-Skatepark", "Cetacea Market", "Kofferfisch-Lager", "Abyssal-Museum", "Arowana Center", "Backfisch-Stadion", "Steinköhler-Grube", "Camp Schützenfisch", "Flunder-Funpark", "Hotel Neothun", "Anchobit Games HQ", "Grundel-Pavillon"]
     };
     const WEAPON_GROUPS = {
-        en: ["Shooter", "Blaster", "Splatling", "Charger", "Roller", "Slosher", "Dualie","Brella"],
-        de: ["Kleckser", "Blaster", "Splatling", "Konzentratoren", "Roller", "Schwapper", "Dualie","Schirm"]
+        en: ["Shooter", "Blaster", "Splatling", "Charger", "Roller", "Slosher", "Dualie", "Brella"],
+        de: ["Kleckser", "Blaster", "Splatling", "Konzentratoren", "Roller", "Schwapper", "Dualie", "Schirm"]
     };
     const WEAPONS = {
         0: {en: 'Sploosh-o-matic', de: "Disperser", group: 0}, // Sploosh-o-matic
@@ -403,12 +403,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         localStorage.setItem("savedMaps", JSON.stringify(CURRENT_MAPS));
     }
 
-    let CURRENT_WEAPONS = [];
+    let CURRENT_WEAPONS = {};
     if (localStorage.getItem("savedWeapons") !== null) {
         CURRENT_WEAPONS = JSON.parse(localStorage.getItem("savedWeapons"));
     } else {
         for (let key in WEAPONS) {
-            CURRENT_WEAPONS.push([key,"0"]);
+            CURRENT_WEAPONS[key] = "0";
         }
         localStorage.setItem("savedWeapons", JSON.stringify(CURRENT_WEAPONS));
     }
@@ -432,6 +432,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             }
             if (!found) {
                 //No language found, use default English
+                console.warn("Browser default language not supported");
                 CURRENT_LANGUAGE = SUPPORTED_LANGUAGES[0];
             }
         }
@@ -456,11 +457,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
         createWeaponMenu();
 
-        //let sortedWeapons = WEAPONS[CURRENT_LANGUAGE].sort();
-        /*for (let i = 0; i < sortedWeapons.length; i++) {
-            let nativeIndex = WEAPONS[CURRENT_LANGUAGE].indexOf(sortedWeapons[i]);
-            addWeapon(WEAPONS.en[nativeIndex]);
-        }*/
         let languageTemplate = document.getElementsByClassName("language-template")[0];
         for (let i = 0; i < SUPPORTED_LANGUAGES.length; i++) {
             addLanguageToPage(languageTemplate, SUPPORTED_LANGUAGES[i]);
@@ -469,7 +465,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         translateAll();
 
         let weaponButton = document.getElementsByClassName("is-random-weapons")[0];
-        console.log(weaponButton);
         weaponButton.checked = CURRENT_IS_WEAPONS_ON;
         randomWeapons(weaponButton);
 
@@ -478,7 +473,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     function createWeaponMenu() {
         let weaponTypeButtonTemplate = document.getElementsByClassName("weapon-type-button-template")[0];
         let weaponTypeCollapseTemplate = document.getElementsByClassName("weapon-type-collapse-template")[0];
-        for (let i = 0; i < WEAPON_GROUPS[CURRENT_LANGUAGE].length; i++){
+        for (let i = 0; i < WEAPON_GROUPS[CURRENT_LANGUAGE].length; i++) {
             let mainDiv = document.createElement("DIV");
 
             let weaponTypeButton = weaponTypeButtonTemplate.cloneNode();
@@ -498,39 +493,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         }
         for (let weapon in WEAPONS) {
             let groupId = WEAPONS[weapon]["group"];
-            //console.log("groupid is " + groupId);
             let group = WEAPON_GROUPS[CURRENT_LANGUAGE][groupId];
-            //console.log("group is " + group);
             let collapseElement = document.getElementById(group);
             addWeapon(weapon, collapseElement);
         }
-    }
-
-    function addWeapon(weaponDict, parentElement) {
-        console.log("WeaponDict is " + weaponDict);
-            let weaponTemplate = document.getElementsByClassName("weapon-template")[0];
-            let weaponLabelTemplate = document.getElementsByClassName("weapon-template-label")[0];
-            let weaponInputTemplate = document.getElementsByClassName("weapon-template-input")[0];
-            let weapon = weaponTemplate.cloneNode();
-            weapon.classList.replace("weapon-template", "weapon");
-            weapon.setAttribute("weapon", WEAPONS[weaponDict][CURRENT_LANGUAGE]);
-            let weaponLabel = weaponLabelTemplate.cloneNode();
-            weaponLabel.classList.replace("weapon-template-label", "weapon-label");
-            let weaponInput = weaponInputTemplate.cloneNode();
-            weaponInput.classList.replace("weapon-template-input", "weapon-input");
-            weaponInput.setAttribute("value", WEAPONS[weaponDict][CURRENT_LANGUAGE]);
-            weapon.style.display = "";
-            weaponLabel.textContent = WEAPONS[weaponDict][CURRENT_LANGUAGE];
-            if (CURRENT_WEAPONS[weaponDict] === "0") {
-                weaponInput.setAttribute("checked", "true");
-                styleButtonOn(weaponLabel);
-            } else {
-                weaponInput.setAttribute("checked", "false");
-                styleButtonOff(weaponLabel);
-            }
-            weaponLabel.appendChild(weaponInput);
-            weapon.appendChild(weaponLabel);
-            parentElement.appendChild(weapon);
     }
 
     function translateAll() {
@@ -643,7 +609,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 localStorage.setItem("savedMaps", JSON.stringify(CURRENT_MAPS));
                 break;
             case "weapons":
-                CURRENT_WEAPONS[WEAPONS.en.indexOf(item)] = arrayItem;
+                CURRENT_WEAPONS[item] = arrayItem;
                 localStorage.setItem("savedWeapons", JSON.stringify(CURRENT_WEAPONS));
                 break;
         }
@@ -659,33 +625,30 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         }
     }
 
-    function addWeaponOld(weaponName) {
-        if (WEAPONS.en.includes(weaponName)) {
-            let index = WEAPONS.en.indexOf(weaponName);
-            let weaponTemplate = document.getElementsByClassName("weapon-template")[0];
-            let weaponLabelTemplate = document.getElementsByClassName("weapon-template-label")[0];
-            let weaponInputTemplate = document.getElementsByClassName("weapon-template-input")[0];
-            let weapon = weaponTemplate.cloneNode();
-            weapon.classList.replace("weapon-template", "weapon");
-            weapon.setAttribute("weapon", weaponName);
-            let weaponLabel = weaponLabelTemplate.cloneNode();
-            weaponLabel.classList.replace("weapon-template-label", "weapon-label");
-            let weaponInput = weaponInputTemplate.cloneNode();
-            weaponInput.classList.replace("weapon-template-input", "weapon-input");
-            weaponInput.setAttribute("value", weaponName);
-            weapon.style.display = "";
-            weaponLabel.textContent = WEAPONS[CURRENT_LANGUAGE][index];
-            if (CURRENT_WEAPONS[index] === "0") {
-                weaponInput.setAttribute("checked", "true");
-                styleButtonOn(weaponLabel);
-            } else {
-                weaponInput.setAttribute("checked", "false");
-                styleButtonOff(weaponLabel);
-            }
-            weaponLabel.appendChild(weaponInput);
-            weapon.appendChild(weaponLabel);
-            weaponTemplate.parentElement.appendChild(weapon);
+    function addWeapon(weaponDict, parentElement) {
+        let weaponTemplate = document.getElementsByClassName("weapon-template")[0];
+        let weaponLabelTemplate = document.getElementsByClassName("weapon-template-label")[0];
+        let weaponInputTemplate = document.getElementsByClassName("weapon-template-input")[0];
+        let weapon = weaponTemplate.cloneNode();
+        weapon.classList.replace("weapon-template", "weapon");
+        weapon.setAttribute("weapon", WEAPONS[weaponDict][CURRENT_LANGUAGE]);
+        let weaponLabel = weaponLabelTemplate.cloneNode();
+        weaponLabel.classList.replace("weapon-template-label", "weapon-label");
+        let weaponInput = weaponInputTemplate.cloneNode();
+        weaponInput.classList.replace("weapon-template-input", "weapon-input");
+        weaponInput.setAttribute("value", weaponDict);
+        weapon.style.display = "";
+        weaponLabel.textContent = WEAPONS[weaponDict][CURRENT_LANGUAGE];
+        if (CURRENT_WEAPONS[weaponDict] === "0") {
+            weaponInput.checked = true;
+            styleButtonOn(weaponLabel);
+        } else {
+            weaponInput.checked = false;
+            styleButtonOff(weaponLabel);
         }
+        weaponLabel.appendChild(weaponInput);
+        weapon.appendChild(weaponLabel);
+        parentElement.appendChild(weapon);
     }
 
     function addMode(modeName) {
@@ -858,7 +821,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     if (isRandomWeapons) {
                         let weaponText = document.createElement("p");
                         weaponText.style.color = "yellow";
-                        weaponText.innerText = WEAPONS[CURRENT_LANGUAGE][Math.floor(Math.random() * WEAPONS[CURRENT_LANGUAGE].length)];
+                        let keys = Object.keys(WEAPONS);
+                        weaponText.innerText = WEAPONS[keys[ keys.length * Math.random() << 0]][CURRENT_LANGUAGE];
                         listItem.appendChild(weaponText);
                     }
                     li.appendChild(listItem);
@@ -875,10 +839,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         nintendise();
         let allGroups = document.getElementsByClassName("random-group");
 
-        for (let i = 0; i < allGroups.length; i++) {
-            nintyReload(allGroups[i]);
+        if (allGroups.length > 0) {
+
+            for (let i = 0; i < allGroups.length; i++) {
+                nintyReload(allGroups[i]);
+            }
+            allGroups[0].scrollIntoView();
         }
-        allGroups[0].scrollIntoView();
     }
 
     function randomWeapons(input) {
@@ -952,8 +919,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         if (allCheckedWeapons.length > 1) {
             let weaponText = document.getElementsByClassName("random-weapon")[0];
             let randomNumber = Math.floor(Math.random() * allCheckedWeapons.length);
-            let weaponIndex = WEAPONS.en.indexOf(allCheckedWeapons[randomNumber]);
-            weaponText.innerHTML = WEAPONS[CURRENT_LANGUAGE][weaponIndex];
+            weaponText.innerHTML = WEAPONS[allCheckedWeapons[randomNumber]][CURRENT_LANGUAGE];
             weaponText.style.display = "";
             nintyReload(weaponText.parentElement.parentElement);
         }
@@ -1101,17 +1067,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <div class="nintendo-style">
         <div>
             <div>
-        <button class="weapon-type-button-template" style="display: none" data-toggle="collapse" data-target="#weaponTypeTemplate">WeaponTypeTemplate</button>
-        <div class="collapse weapon-type-collapse-template" style="display: none" id="weaponTypeTemplate">
-            <div class="row" style="margin: 1%">
-                <div class="form-check-inline weapon-template" style="display: none">
-                    <label class="form-check-label weapon-template-label btn btn-sm" style="box-shadow: 2px 2px 2px grey;">
-                        <input class="weapon-template-input" style="display: none" type="checkbox"
-                               onclick="chooseItem(this)" name="weapons" value="WeaponTemplate">WeaponTemplate
-                    </label>
+                <button class="weapon-type-button-template btn btn-toolbar btn-primary" style="display: none; margin: 0.2rem" data-toggle="collapse"
+                        data-target="#weaponTypeTemplate">WeaponTypeTemplate
+                </button>
+                <div class="collapse weapon-type-collapse-template" style="display: none" id="weaponTypeTemplate">
+                    <div class="row" style="margin: 1%">
+                        <div class="form-check-inline weapon-template" style="display: none">
+                            <label class="form-check-label weapon-template-label btn btn-sm"
+                                   style="box-shadow: 2px 2px 2px grey;">
+                                <input class="weapon-template-input" style="display: none" type="checkbox"
+                                       onclick="chooseItem(this)" name="weapons" value="WeaponTemplate">WeaponTemplate
+                            </label>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
             </div>
         </div>
         <div class="row" style="margin: 1%">
