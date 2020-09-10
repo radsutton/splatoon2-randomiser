@@ -654,7 +654,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.-->
                         let weaponText = document.createElement("p");
                         weaponText.style.color = "yellow";
                         let keys = Object.keys(WEAPONS);
-                        weaponText.innerText = WEAPONS[keys[ keys.length * Math.random() << 0]][CURRENT_LANGUAGE];
+                        weaponText.innerText = WEAPONS[keys[keys.length * Math.random() << 0]][CURRENT_LANGUAGE];
                         listItem.appendChild(weaponText);
                     }
                     li.appendChild(listItem);
@@ -786,14 +786,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.-->
     function confirmResetConfiguration() {
         let alert = document.getElementsByClassName("alert-box")[0];
         alert.classList.add("show");
-        alert.style.display="";
+        alert.style.display = "";
         alert.scrollIntoView();
     }
 
     function closeElement() {
         let alert = document.getElementsByClassName("alert-box")[0];
         alert.classList.remove("show");
-        alert.style.display="none";
+        alert.style.display = "none";
     }
 
     function resetConfiguration() {
@@ -917,7 +917,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.-->
     <div class="nintendo-style">
         <div>
             <div>
-                <button class="weapon-type-button-template btn btn-toolbar btn-primary" style="display: none; margin: 0.2rem" data-toggle="collapse"
+                <button class="weapon-type-button-template btn btn-toolbar btn-primary"
+                        style="display: none; margin: 0.2rem" data-toggle="collapse"
                         data-target="#weaponTypeTemplate">WeaponTypeTemplate
                 </button>
                 <div class="collapse weapon-type-collapse-template" style="display: none" id="weaponTypeTemplate">
@@ -975,9 +976,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.-->
     </div>
 </div>
 <div class="row">
-<input type="button" class="btn btn-light translatable" data-translate="16"
-       style="margin-bottom: 1%; margin-top: 0.5rem;"
-       onclick="confirmResetConfiguration()">
+    <input type="button" class="btn btn-light translatable" data-translate="16"
+           style="margin-bottom: 1%; margin-top: 0.5rem;"
+           onclick="confirmResetConfiguration()">
 </div>
 <div class="alert alert-warning fade alert-box row alert-dismissible" style="display: none">
     <p class="col-sm-10 translatable" data-translate="17"></p>
