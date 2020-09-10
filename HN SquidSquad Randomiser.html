@@ -40,7 +40,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.-->
             "Weapons OFF", "Weapons ON", "Randomise Stage!", "Randomise Mode!", "Randomise Weapon!", "Import Configuration",
             "Insert here...", "Import", "Export Configuration", "Copy from here...", "Export", "Created by Richard Sutton"],
         de: ["Sprache", "Spieler auswählen:", "Spieler zufügen", "Gruppengröße auswählen:", "Spieler zufällig einordnen!",
-            "Waffen AUS", "Waffen AN", "Kurs zufällig auswählen!", "Modus zufällig auswählen!", "Waffe zufällig einordnen!", "Konfiguration Importieren",
+            "Waffen AUS", "Waffen AN", "Arena zufällig auswählen!", "Modus zufällig auswählen!", "Waffe zufällig einordnen!", "Konfiguration Importieren",
             "Hier einfügen...", "Importieren", "Konfiguration Exportieren", "Von hier kopieren...", "Exportieren", "Erstellt von Richard Sutton"]
     };
     const MODES = {
@@ -984,7 +984,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.-->
                     <input class="player-template-input" style="display: none" type="checkbox"
                            onclick="chooseItem(this)" name="players" value="PlayerTemplate">PlayerTemplate
                 </label>
-                <i class="fa fa-close btn btn-sm btn-danger player-template-delete"
+                <i style="margin-left: 0.5rem" class="fa fa-close btn btn-sm btn-danger player-template-delete"
                    onclick="deletePlayer(this.previousSibling.value)"></i>
             </div>
         </form>
